@@ -3,7 +3,7 @@ package bibtek;
 
 import junit.framework.TestCase;
 
-public class bibtexTest extends TestCase {
+public class BibtexTest extends TestCase {
     
     @Override
     protected void setUp() throws Exception {
