@@ -11,3 +11,5 @@ https://docs.google.com/spreadsheet/ccc?key=0AsxXuhUTKPZXdHg0WF81VGVpdnVKb2pqOGl
 
 voi olla hyvä pohja backlogiin:
 http://stackoverflow.com/questions/2773760/scrum-backlog-excel-templates
+
+vähän simppelimpi pohja: http://www.codeproject.com/Articles/19857/Scrum-Product-and-Sprint-Backlogs-using-Excel
