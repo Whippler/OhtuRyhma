@@ -1,54 +1,19 @@
 package bibtek;
 
 import bibtek.domain.Reference;
-import bibtek.domain.Viitteet;
 import bibtek.io.IO;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 
 public class Bibtex {
 
-    private File refs;
+    
     private IO io;
-    private Viitteet references;
     private Reference ref;
 
     public Bibtex(IO io) {
         this.io = io;
-        this.refs = null;
     }
 
-    //luo tiedoston johon viitteet tallennetaan, mikäli ei aiemmin ollut olemassa
-    public void initBibtexFile(String filename) {
-        this.refs = new File(filename + ".bib");
-        try {
-            if (!this.refs.exists()) {
-                this.refs.createNewFile();
-            }
-        } catch (IOException e) {
-            e.printStackTrace(System.out);
-        }
-    }
 
-    //tallentaa tiedot yhteen refs.bib -tiedostoon
-    public boolean tallennaTiedot() {
-        if (this.refs == null) {
-            return false;
-        }
-        try {
-            FileWriter fw = new FileWriter(this.refs.getName(), true);
-            BufferedWriter bw = new BufferedWriter(fw);
-            bw.write(ref.refInBibtex());
-            bw.close();
-            fw.close();
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace(System.out);
-            return false;
-        }
-    }
 
     //luo uuden viitteen, kysyy tyypin ja sisällön
     public void createReference() {
@@ -80,24 +45,6 @@ public class Bibtex {
   
     public void run() {
         String input;
-        io.print("By default your reference file name is refs.bib.\n"
-                + "Do you wish to change this setting? (y/n)\n");
-
-        while (true) {  //ensin kysytään käyttäjältä mihin tiedostoon tallennetaan
-            input = io.readUserInput(">");
-            if (input.equalsIgnoreCase("n")) {
-                this.initBibtexFile("refs");
-                break;
-            } else if (input.equalsIgnoreCase("y")) {
-                input = "";
-                while (input.length() == 0) {
-                    input = io.readUserInput("filename:");
-                    this.initBibtexFile(input);
-                }
-            }
-            break;
-        }
-
         while (true) {  //sitten aletaan käsittelemään muita syötteitä
             io.print("Enter create if you want to create reference.\n"
                     + "Enter plain if you want to read reference in plaintext.\n"
@@ -115,7 +62,7 @@ public class Bibtex {
                 if (this.ref == null || this.ref.refInBibtex() == null) {
                     io.print("No current reference to save!");
                 } else {
-                    if (this.tallennaTiedot()) {
+                    if (io.saveRefstoFile(ref.toString())) {
                         io.print("Created a new reference and added it to file\n");
                     } else {
                         io.print("Error in writing to a file!");
