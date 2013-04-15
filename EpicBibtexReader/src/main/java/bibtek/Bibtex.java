@@ -1,6 +1,7 @@
 package bibtek;
 
 import bibtek.domain.Reference;
+import bibtek.domain.Viitteet;
 import bibtek.io.IO;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -11,6 +12,7 @@ public class Bibtex {
 
     private File refs;
     private IO io;
+    private Viitteet references;
     private Reference ref;
 
     public Bibtex(IO io) {
