@@ -4,7 +4,7 @@
  */
 package bibtek;
 
-import java.util.ArrayList;
+import bibtek.domain.Reference;
 import java.util.HashMap;
 
 /**
@@ -12,14 +12,14 @@ import java.util.HashMap;
  * @author Kalle
  */
 public class Viitteet {
-    private HashMap<String, HashMap<String, String>> viitteet; // id, viite
+    private HashMap<String, Reference> viitteet; // id, viite
     
     
     public void Viitteet(){
-        viitteet = new HashMap<String, HashMap<String, String>>();
+        viitteet = new HashMap<String, Reference>();
     }
     
-    public boolean add(String id, HashMap<String, String> viite){
+    public boolean add(String id, Reference viite){
         if(viitteet.containsKey(id)){
             return false;
         } else {
@@ -27,6 +27,10 @@ public class Viitteet {
             return true;
         }
         
+    }
+
+    public HashMap<String, Reference> getViitteet() {
+        return viitteet;
     }
     
 }
