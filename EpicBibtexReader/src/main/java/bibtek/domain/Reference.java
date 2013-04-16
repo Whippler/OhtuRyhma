@@ -127,4 +127,10 @@ public class Reference {
         tmp = tmp.substring(0, tmp.length() - 2);
         return tmp;
     }
+
+    @Override
+    public String toString() {
+        return refInPlainText();
+    }
+    
 }
