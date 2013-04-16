@@ -55,5 +55,16 @@ public class Viitteet {
         if (viitteet.containsKey(key)) return true;
         else return false;
     }
+
+    @Override
+    public String toString() {
+        String paluu = "";
+        for (Reference r : viitteet.values()){
+            HashMap<String, String> data = r.getData();
+            paluu = paluu + data.get("title") + " - " + data.get("author/n");
+        }
+        
+        return paluu;
+    }
     
 }
