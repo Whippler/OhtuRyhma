@@ -12,6 +12,7 @@ public class Bibtex {
 
     public Bibtex(IO io) {
         this.io = io;
+        references = new Viitteet();
     }
 
     //luo uuden viitteen, kysyy tyypin ja sisällön
