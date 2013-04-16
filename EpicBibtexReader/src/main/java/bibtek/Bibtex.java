@@ -43,20 +43,20 @@ public class Bibtex {
         
         String newID = generoiId(ref.getData().get("author"), ref.getData().get("year"));
         
-//        Character alku = 'a';
-//        int a = alku.charValue();
+        Character alku = 'a';
+        int a = alku.charValue();
 
-//        while (true) {  // tarkistaa onko ID jo käytössä ja jos on niin vaihtaa viimeisen merkin uuteen.
-//            if (references.containsKey(newID)) {
-//                newID = newID.substring(0, newID.length()-2);
-//                
-//                newID = newID + (char)a;
-//                a++;                
-//            } else {
-//                references.add(newID, ref);
-//                break;
-//            }
-//        }
+        while (true) {  // tarkistaa onko ID jo käytössä ja jos on niin vaihtaa viimeisen merkin uuteen.
+            if (references.containsKey(newID)) {
+                newID = newID.substring(0, newID.length()-2);
+                
+                newID = newID + (char)a;
+                a++;                
+            } else {
+                references.add(newID, ref);
+                break;
+            }
+        }
 
     }
 
