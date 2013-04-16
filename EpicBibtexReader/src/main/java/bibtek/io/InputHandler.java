@@ -2,6 +2,7 @@ package bibtek.io;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
@@ -15,7 +16,6 @@ public class InputHandler implements IO {
 
     public InputHandler() {
         this.sc = new Scanner(System.in);
-        selectFile();
     }
 
     public String readUserInput(String prompt) {
@@ -26,8 +26,8 @@ public class InputHandler implements IO {
     public void print(String s) {
         System.out.println(s);
     }
-    
-   //luo tiedoston johon viitteet tallennetaan, mikäli ei aiemmin ollut olemassa
+
+    //luo tiedoston johon viitteet tallennetaan, mikäli ei aiemmin ollut olemassa
     public void initBibtexFile(String filename) {
         this.refs = new File(filename + ".bib");
         try {
@@ -38,7 +38,7 @@ public class InputHandler implements IO {
             e.printStackTrace(System.out);
         }
     }
-    
+
     //tallentaa tiedot yhteen refs.bib -tiedostoon
     public boolean saveRefstoFile(String s) {
         if (this.refs == null) {
@@ -75,6 +75,20 @@ public class InputHandler implements IO {
                 }
             }
             break;
+        }
+    }
+
+    public String fileToString() {
+        try {
+            Scanner sca = new Scanner(refs);
+            String tmp = "";
+            while (sca.hasNextLine()) {
+                tmp += sca.nextLine();
+                tmp += "|";
+            }
+            return tmp;
+        } catch (FileNotFoundException ex) {
+            return "file not found";
         }
     }
 }

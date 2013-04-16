@@ -10,6 +10,8 @@ public interface IO {
     
     void selectFile();
     
+    String fileToString();
+    
     void initBibtexFile(String filename);
     
 }

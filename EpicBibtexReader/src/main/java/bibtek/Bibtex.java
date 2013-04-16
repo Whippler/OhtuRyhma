@@ -40,18 +40,18 @@ public class Bibtex {
                 io.print("Invalid input! Check that the field is written correctly and the content is not empty.");
             }
         }
-        
+
         String newID = generoiId(ref.getData().get("author"), ref.getData().get("year"));
-        
+
         Character alku = 'a';
         int a = alku.charValue();
 
         while (true) {  // tarkistaa onko ID jo käytössä ja jos on niin vaihtaa viimeisen merkin uuteen.
             if (references.containsKey(newID)) {
-                newID = newID.substring(0, newID.length()-2);
-                
-                newID = newID + (char)a;
-                a++;                
+                newID = newID.substring(0, newID.length() - 2);
+
+                newID = newID + (char) a;
+                a++;
             } else {
                 references.add(newID, ref);
                 break;
@@ -69,13 +69,54 @@ public class Bibtex {
         return retID;
     }
 
+    public void lataaViitteet() {
+//@article{W04,
+//journal = {J. Comput. Small Coll.},
+//author = {Whittington, Keith\"{o}\"{o}\"{A}P\{AA}\"{o}\"{A} J.},
+//title = {Infusing active learning into introductory programming courses},
+//address = {USA},
+//pages = {249--259},
+//volume = {19},
+//year = {2004},
+//number = {5},
+//publisher = {Consortium for Computing Sciences in Colleges},
+//}
+        String s = io.fileToString();
+        String[] lines = s.split("\\|");
+        String id = "";
+        Reference readedref= new Reference();
+        
+        for(String currentLine : lines) {
+            if (currentLine.isEmpty()) continue;
+            else if(currentLine.charAt(0)=='@'){
+                String[] t = currentLine.split("\\{");
+                readedref.setEntryType(t[0].substring(1));
+                id = t[1].substring(0,t[1].length()-1);
+                readedref.setId(id);
+                System.out.println(id);
+
+            }
+            else if (currentLine.charAt(0)=='}'){
+                references.add(id, ref);
+                readedref=new Reference();
+            }
+            
+        }
+        
+        System.exit(0);
+    }
+
     public void run() {
+        lataaViitteet();
+
         String input;
         while (true) {  //sitten aletaan käsittelemään muita syötteitä
-            io.print("Enter create if you want to create reference.\n"
+            io.print("Enter create if you want to create a reference.\n"
+                    + "Enter select if you want to find/select one from files.\n"
                     + "Enter plain if you want to read reference in plaintext.\n"
                     + "Enter bib if you want to read reference in bibtex.\n"
-                    + "Enter save if you want to save the current reference to a file.\n"
+                    + "Enter list to list all references"
+                    + "Enter save if you want to save the references to a file.\n"
                     + "Press enter if you want to quit.\n");
             input = io.readUserInput(">");
             if (input.equalsIgnoreCase("create")) {
