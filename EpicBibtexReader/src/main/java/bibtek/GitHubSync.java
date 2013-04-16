@@ -15,6 +15,11 @@ import java.util.Scanner;
  * @author retsi
  */
 public class GitHubSync {
+    
+    String[] add = {"git", "add", "-A"};
+    String[] commit = {"git", "commit", "-m", ""};
+    String[] push = {"git", "push"};
+    String[] pull = {"git", "pull"};
 
     public GitHubSync() {
         run();
@@ -28,120 +33,16 @@ public class GitHubSync {
         
         System.out.println("Give path to git repository (eg: in format \"/home/username/myproject/myrepo/\"");
         path = lukija.nextLine();
-        System.out.println(path);
         System.out.println("Give commit message:");
         commitmsg = lukija.nextLine();
-        add(path);
-        commit(path, commitmsg);
-        push(path);
+        commit[3] = commitmsg;
+        GitHubCommand add = new GitHubCommand(path, this.add);
+        GitHubCommand commit = new GitHubCommand(path, this.commit);
+        GitHubCommand push = new GitHubCommand(path, this.push);
         
-    }
-    
-    public static void add(String path) {
-
-        String s = "";
-
-        try {
-            ProcessBuilder pb = new ProcessBuilder("git", "add", "-A");
-            pb.directory(new File(path));
-            Process p = pb.start();
-
-            BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
-
-            BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
-            
-            while ((s = stdInput.readLine()) != null) {
-                System.out.println(s);
-            }
-            
-            while ((s = stdError.readLine()) != null) {
-                System.out.println(s);
-            }
-            
-        } catch (IOException e) {
-            System.out.println("IO Exception:");
-            e.printStackTrace();
-        }
-    }
-    
-    public static void commit(String path, String commit) {
-
-        String s = "";
-
-        try {
-            ProcessBuilder pb = new ProcessBuilder("git", "commit", "-m", "\""+commit+"\"");
-            pb.directory(new File(path));
-            Process p = pb.start();
-
-            BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
-
-            BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
-            
-            while ((s = stdInput.readLine()) != null) {
-                System.out.println(s);
-            }
-            
-            while ((s = stdError.readLine()) != null) {
-                System.out.println(s);
-            }
-            
-        } catch (IOException e) {
-            System.out.println("IO Exception:");
-            e.printStackTrace();
-        }
-    }
-    
-    public static void pull(String path, String commit) {
-
-        String s = "";
-
-        try {
-            ProcessBuilder pb = new ProcessBuilder("git", "pull");
-            pb.directory(new File(path));
-            Process p = pb.start();
-
-            BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
-
-            BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
-            
-            while ((s = stdInput.readLine()) != null) {
-                System.out.println(s);
-            }
-            
-            while ((s = stdError.readLine()) != null) {
-                System.out.println(s);
-            }
-            
-        } catch (IOException e) {
-            System.out.println("IO Exception:");
-            e.printStackTrace();
-        }
-    }
-    
-    public static void push(String path) {
-
-        String s = "";
-
-        try {
-            ProcessBuilder pb = new ProcessBuilder("git", "push");
-            pb.directory(new File(path));
-            Process p = pb.start();
-
-            BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
-
-            BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
-            
-            while ((s = stdInput.readLine()) != null) {
-                System.out.println(s);
-            }
-            
-            while ((s = stdError.readLine()) != null) {
-                System.out.println(s);
-            }
-            
-        } catch (IOException e) {
-            System.out.println("IO Exception:");
-            e.printStackTrace();
-        }
+        add.run();
+        commit.run();
+        push.run();
+        
     }
 }
