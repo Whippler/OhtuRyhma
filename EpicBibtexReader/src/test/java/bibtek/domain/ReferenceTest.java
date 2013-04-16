@@ -22,6 +22,7 @@ public class ReferenceTest {
         ref.setField("pages", "0--450");
         ref.setField("publisher", "Louhi media");
         ref.setField("address", "Kalevala");
+        ref.setId("V23");
     }
 
     @Test
