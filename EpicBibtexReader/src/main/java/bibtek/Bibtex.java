@@ -70,17 +70,6 @@ public class Bibtex {
     }
 
     public void lataaViitteet() {
-//@article{W04,
-//journal = {J. Comput. Small Coll.},
-//author = {Whittington, Keith\"{o}\"{o}\"{A}P\{AA}\"{o}\"{A} J.},
-//title = {Infusing active learning into introductory programming courses},
-//address = {USA},
-//pages = {249--259},
-//volume = {19},
-//year = {2004},
-//number = {5},
-//publisher = {Consortium for Computing Sciences in Colleges},
-//}
         String s = io.fileToString();
         String[] lines = s.split("\\|");
         String id = "";
@@ -103,11 +92,9 @@ public class Bibtex {
             
         }
         
-        System.exit(0);
     }
 
     public void run() {
-        lataaViitteet();
 
         String input;
         while (true) {  //sitten aletaan käsittelemään muita syötteitä
