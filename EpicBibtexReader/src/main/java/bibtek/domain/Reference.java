@@ -15,6 +15,15 @@ public class Reference {
         data = new HashMap<String, String>();
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public HashMap<String, String> getData() {
+        return data;
+    }
+    
+
     //asettaa viitteen tyypin, esim. article, book jne.
     public boolean setEntryType(String entryType) {
         String[] accepted = {"article", "book", "booklet", "conference", "inbook",
@@ -32,14 +41,16 @@ public class Reference {
     }
 
     //palauttaa kentistä author ja year generoidun idn 
-    public String generoiId(String author, String year) {
-        String retID = "";
-        for (String s : author.split(" and ")) {
-            retID += s.charAt(0);
-        }
-        retID += year.substring(year.length() - 2);
-        return retID;
-    }
+    // SIIRRETTY BIBTEX LUOKKAAN
+    
+//    public String generoiId(String author, String year) {
+//        String retID = "";
+//        for (String s : author.split(" and ")) {
+//            retID += s.charAt(0);
+//        }
+//        retID += year.substring(year.length() - 2);
+//        return retID;
+//    }
 
     //tallentaa kentän nimen ja sisällön hashmappiin
     public boolean setField(String field, String content) {
@@ -78,7 +89,7 @@ public class Reference {
         String tmp = "";
         Iterator i = this.data.entrySet().iterator();
 
-        this.id = generoiId(this.data.get("author"), this.data.get("year")); //kirjoitetaan ensin
+//        this.id = generoiId(this.data.get("author"), this.data.get("year")); //kirjoitetaan ensin
         tmp += "@" + this.entryType + "{" + this.id + ",\n";                 //otsakkeen tiedot
 
         //kahteen ekaan kenttään author ja title, loput voivat olla missä järj. tahansa
