@@ -10,4 +10,4 @@ Sprint Backlog:
 https://docs.google.com/spreadsheet/ccc?key=0AsxXuhUTKPZXdHZkMkNVWHRhQnpsNFR2R2t6YS1sSkE&usp=sharing
 
 Jenkins :):
-t-esaaksvu.users.cs.helsinki.fi/jenkins/job/Ohtumini/build?token=kissakala
+http://t-esaaksvu.users.cs.helsinki.fi/jenkins/job/Ohtumini/
