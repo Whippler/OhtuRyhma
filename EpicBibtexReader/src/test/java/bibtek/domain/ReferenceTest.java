@@ -90,16 +90,16 @@ public class ReferenceTest {
         assertFalse(tarkistaja);
     }
 
-    @Test
-    public void IDTesti() {
-        String id = ref.generoiId("Väinämöinen, Vakavanha", "1023");
-        assertEquals("V23", id);
-
-    }
-
-    @Test
-    public void IDTestiUseallaKirjoittajalla() {
-        String id = ref.generoiId("Hassinen, Marko and Mäyrä, Hannu", "2006");
-        assertEquals("HM06", id);
-    }
+//    @Test
+//    public void IDTesti() {
+//        String id = ref.generoiId("Väinämöinen, Vakavanha", "1023");
+//        assertEquals("V23", id);
+//
+//    }
+//
+//    @Test
+//    public void IDTestiUseallaKirjoittajalla() {
+//        String id = ref.generoiId("Hassinen, Marko and Mäyrä, Hannu", "2006");
+//        assertEquals("HM06", id);
+//    }
 }

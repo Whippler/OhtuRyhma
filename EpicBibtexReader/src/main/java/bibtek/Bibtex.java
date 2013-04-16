@@ -1,19 +1,18 @@
 package bibtek;
 
 import bibtek.domain.Reference;
+import bibtek.domain.Viitteet;
 import bibtek.io.IO;
 
 public class Bibtex {
 
-    
     private IO io;
     private Reference ref;
+    private Viitteet references;
 
     public Bibtex(IO io) {
         this.io = io;
     }
-
-
 
     //luo uuden viitteen, kysyy tyypin ja sisällön
     public void createReference() {
@@ -40,9 +39,35 @@ public class Bibtex {
                 io.print("Invalid input! Check that the field is written correctly and the content is not empty.");
             }
         }
+        
+        String newID = generoiId(ref.getData().get("author"), ref.getData().get("year"));
+        
+        Character alku = 'a';
+        int a = alku.charValue();
+
+        while (true) {  // tarkistaa onko ID jo käytössä ja jos on niin vaihtaa viimeisen merkin uuteen.
+            if (references.containsKey(newID)) {
+                newID = newID.substring(0, newID.length()-2);
+                
+                newID = newID + (char)a;
+                a++;                
+            } else {
+                references.add(newID, ref);
+                break;
+            }
+        }
+
     }
 
-  
+    private String generoiId(String author, String year) {
+        String retID = "";
+        for (String s : author.split(" and ")) {
+            retID += s.charAt(0);
+        }
+        retID += year.substring(year.length() - 2);
+        return retID;
+    }
+
     public void run() {
         String input;
         while (true) {  //sitten aletaan käsittelemään muita syötteitä
