@@ -99,18 +99,19 @@ public class Bibtex {
     }
 
     public void run() {
+        io.selectFile();
         lataaViitteet();
         String input;
         while (true) {  //sitten aletaan käsittelemään muita syötteitä
             
-            if (ref!=null) {io.print("Current ref: "+ref.getData().get("title")+"\n");}
+            if (ref!=null) {io.print("Current ref: "+ref.getData().get("title"));}
             io.print("Enter create if you want to create a reference.\n"
                     + "Enter search if you want to search from files.\n"
                     + "Enter plain if you want to read reference in plaintext.\n"
                     + "Enter bib if you want to read reference in bibtex.\n"
                     + "Enter list to list all references\n"
-                    + "Enter list in bibtex.\n"
-                    + "Enter select.\n"
+                    + "Enter biblist to list all references in bibtex.\n"
+                    + "Enter select if you want to select a certain reference.\n"
                     + "Enter save if you want to save the references to a file.\n"
                     + "Press enter if you want to quit.\n");
             input = io.readUserInput(">");
@@ -119,6 +120,8 @@ public class Bibtex {
                 if (this.ref == null || this.ref.refInBibtex() == null) {
                     io.print("Error in creating bibtex reference!\n"
                             + "Remember that the required fields are: author, year and title\n");
+                }else{
+                    io.print("Created new reference!");
                 }
             } else if (input.equalsIgnoreCase("save")) {
                 if (this.ref == null || this.ref.refInBibtex() == null) {
@@ -145,12 +148,13 @@ public class Bibtex {
                 }
 
             } else if (input.equals("")) {
+                io.print("Bye!\n");
                 break;
             }
             else if (input.equals("list")) {
                io.print(references.toString());
             }
-            else if (input.equals("list in bibtex")) {
+            else if (input.equals("biblist")) {
                 io.print(references.viitteetInBibtex());
             }
             else if (input.equals("search")) {

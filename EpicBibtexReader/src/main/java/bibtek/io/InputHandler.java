@@ -72,6 +72,7 @@ public class InputHandler implements IO {
                 while (input.length() == 0) {
                     input = readUserInput("filename:");
                     this.initBibtexFile(input);
+                    print("References will now be saved into " + input + ".bib");
                 }
             }
             break;
