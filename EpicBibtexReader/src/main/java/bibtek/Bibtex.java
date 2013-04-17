@@ -54,6 +54,7 @@ public class Bibtex {
                 a++;
             } else {
                 references.add(newID, ref);
+                ref.setId(newID);
                 break;
             }
         }
