@@ -16,7 +16,7 @@ public class Viitteet {
     private HashMap<String, Reference> viitteet; // id, viite
     
     
-    public void Viitteet(){
+    public Viitteet(){
         viitteet = new HashMap<String, Reference>();
     }
     
@@ -61,7 +61,8 @@ public class Viitteet {
         String paluu = "";
         for (Reference r : viitteet.values()){
             HashMap<String, String> data = r.getData();
-            paluu = paluu + data.get("title") + " - " + data.get("author/n");
+            paluu += data.get("title") + " - " + data.get("author");
+            paluu += "\n";
         }
         
         return paluu;

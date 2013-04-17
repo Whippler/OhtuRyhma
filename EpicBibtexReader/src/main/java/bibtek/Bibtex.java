@@ -82,20 +82,26 @@ public class Bibtex {
                 readedref.setEntryType(t[0].substring(1));
                 id = t[1].substring(0,t[1].length()-1);
                 readedref.setId(id);
-                System.out.println(id);
-
             }
             else if (currentLine.charAt(0)=='}'){
-                references.add(id, ref);
+                references.add(id, readedref);
                 readedref=new Reference();
+            }
+            else {
+                String[] fields = currentLine.split(" = ");
+                String data = readedref.korjaaKirjaimet(fields[1]).replaceAll("([\\{}])", "");
+                data = data.substring(0,data.length()-1);
+                readedref.setField(fields[0], data);
+                
             }
             
         }
         
+        System.out.println(references.toString());
     }
 
     public void run() {
-
+        lataaViitteet();
         String input;
         while (true) {  //sitten aletaan käsittelemään muita syötteitä
             io.print("Enter create if you want to create a reference.\n"

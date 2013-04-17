@@ -22,7 +22,6 @@ public class Reference {
     public HashMap<String, String> getData() {
         return data;
     }
-    
 
     //asettaa viitteen tyypin, esim. article, book jne.
     public boolean setEntryType(String entryType) {
@@ -42,7 +41,6 @@ public class Reference {
 
     //palauttaa kentistä author ja year generoidun idn 
     // SIIRRETTY BIBTEX LUOKKAAN
-    
 //    public String generoiId(String author, String year) {
 //        String retID = "";
 //        for (String s : author.split(" and ")) {
@@ -51,7 +49,6 @@ public class Reference {
 //        retID += year.substring(year.length() - 2);
 //        return retID;
 //    }
-
     //tallentaa kentän nimen ja sisällön hashmappiin
     public boolean setField(String field, String content) {
         String[] accepted = {"address", "annote", "author", "booktitle", "chapter", "crossref", "edition",
@@ -72,12 +69,21 @@ public class Reference {
 
     //ääkköset bibtex-muotoon
     public String korjaaKirjaimet(String s) {
-        s = s.replace("ä", "\\\"{a}");
-        s = s.replace("Ä", "\\\"{A}");
-        s = s.replace("ö", "\\\"{o}");
-        s = s.replace("Ö", "\\\"{O}");
-        s = s.replace("å", "\\{aa}");
-        s = s.replace("Å", "\\{AA}");
+        if (s.contains("\\")) {
+            s = s.replace("\\\"{a}", "ä");
+            s = s.replace("\\\"{A}", "Ä");
+            s = s.replace("\\\"{o}", "ö");
+            s = s.replace("\\\"{O}", "Ö");
+            s = s.replace("\\{aa}", "å");
+            s = s.replace("\\{AA}", "Å");
+        } else {
+            s = s.replace("ä", "\\\"{a}");
+            s = s.replace("Ä", "\\\"{A}");
+            s = s.replace("ö", "\\\"{o}");
+            s = s.replace("Ö", "\\\"{O}");
+            s = s.replace("å", "\\{aa}");
+            s = s.replace("Å", "\\{AA}");
+        }
         return s;
     }
 
@@ -111,12 +117,7 @@ public class Reference {
 
     public String refInPlainText() {
         String tmp = this.refInBibtex();
-        tmp = tmp.replace("\\\"{a}", "ä");
-        tmp = tmp.replace("\\\"{A}", "Ä");
-        tmp = tmp.replace("\\\"{o}", "ö");
-        tmp = tmp.replace("\\\"{O}", "Ö");
-        tmp = tmp.replace("\\{aa}", "å");
-        tmp = tmp.replace("\\{AA}", "Å");
+        tmp=korjaaKirjaimet(tmp);
 
         tmp = tmp.replaceAll("\\@.*\\,", "");
         tmp = tmp.replaceAll(" \\{", "");
@@ -132,6 +133,4 @@ public class Reference {
     public String toString() {
         return refInPlainText();
     }
-    
-    
 }
