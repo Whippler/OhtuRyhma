@@ -19,6 +19,10 @@ public class Reference {
         this.id = id;
     }
 
+    public String getId(){
+        return id;
+    }
+    
     public HashMap<String, String> getData() {
         return data;
     }
@@ -69,14 +73,17 @@ public class Reference {
 
     //ääkköset bibtex-muotoon
     public String korjaaKirjaimet(String s) {
-        if (s.contains("\\")) {
+        if (s.contains("{a}") || s.contains("{o}")
+                || s.contains("{A}") || s.contains("{O}")
+                || s.contains("{aa}") || s.contains("{AA}")) {
             s = s.replace("\\\"{a}", "ä");
             s = s.replace("\\\"{A}", "Ä");
             s = s.replace("\\\"{o}", "ö");
             s = s.replace("\\\"{O}", "Ö");
             s = s.replace("\\{aa}", "å");
             s = s.replace("\\{AA}", "Å");
-        } else {
+        }
+        else {
             s = s.replace("ä", "\\\"{a}");
             s = s.replace("Ä", "\\\"{A}");
             s = s.replace("ö", "\\\"{o}");

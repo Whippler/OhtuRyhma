@@ -91,24 +91,25 @@ public class Bibtex {
                 String[] fields = currentLine.split(" = ");
                 String data = readedref.korjaaKirjaimet(fields[1]).replaceAll("([\\{}])", "");
                 data = data.substring(0,data.length()-1);
-                readedref.setField(fields[0], data);
-                
+                readedref.setField(fields[0], data); 
             }
-            
         }
-        
-        System.out.println(references.toString());
+       
     }
 
     public void run() {
         lataaViitteet();
         String input;
         while (true) {  //sitten aletaan käsittelemään muita syötteitä
+            
+            if (ref!=null) {io.print("Current ref: "+ref.getData().get("title")+"\n");}
             io.print("Enter create if you want to create a reference.\n"
-                    + "Enter select if you want to find/select one from files.\n"
+                    + "Enter search if you want to search from files.\n"
                     + "Enter plain if you want to read reference in plaintext.\n"
                     + "Enter bib if you want to read reference in bibtex.\n"
-                    + "Enter list to list all references"
+                    + "Enter list to list all references\n"
+                    + "Enter list in bibtex.\n"
+                    + "Enter select.\n"
                     + "Enter save if you want to save the references to a file.\n"
                     + "Press enter if you want to quit.\n");
             input = io.readUserInput(">");
@@ -122,7 +123,7 @@ public class Bibtex {
                 if (this.ref == null || this.ref.refInBibtex() == null) {
                     io.print("No current reference to save!");
                 } else {
-                    if (io.saveRefstoFile(ref.toString())) {
+                    if (io.saveRefstoFile(references.viitteetInBibtex())) {
                         io.print("Created a new reference and added it to file\n");
                     } else {
                         io.print("Error in writing to a file!");
@@ -144,6 +145,19 @@ public class Bibtex {
 
             } else if (input.equals("")) {
                 break;
+            }
+            else if (input.equals("list")) {
+               io.print(references.toString());
+            }
+            else if (input.equals("list in bibtex")) {
+                io.print(references.viitteetInBibtex());
+            }
+            else if (input.equals("search")) {
+                io.print(references.haeViitteista(io.readUserInput("Mitä haetaan?")).toString());
+            }
+            else if (input.equals("select")) {
+                io.print(references.toString()+"----------------------");
+                ref=references.getViitteet().get(io.readUserInput("kirjoita id"));
             }
         }
     }

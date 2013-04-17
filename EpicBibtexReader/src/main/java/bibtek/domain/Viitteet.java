@@ -39,10 +39,6 @@ public class Viitteet {
         if (founded.isEmpty()) {
             return null;
         } else {
-            String d = "";
-            for (Reference r : founded) {
-                d += r.toString() + "\n";
-            }
             return founded;
         }
     }
@@ -61,11 +57,20 @@ public class Viitteet {
         String paluu = "";
         for (Reference r : viitteet.values()){
             HashMap<String, String> data = r.getData();
-            paluu += data.get("title") + " - " + data.get("author");
+            paluu += r.getId()+": "+data.get("title") + " - " + data.get("author");
             paluu += "\n";
         }
         
         return paluu;
+    }
+    
+    public String viitteetInBibtex() {
+        String tmp="";
+         for (Reference r : viitteet.values()) {
+             tmp+=r.refInBibtex();
+             tmp+="\n";
+         }
+         return tmp;
     }
     
 }
