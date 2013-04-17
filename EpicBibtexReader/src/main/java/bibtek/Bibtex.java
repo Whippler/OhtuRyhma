@@ -3,6 +3,7 @@ package bibtek;
 import bibtek.domain.Reference;
 import bibtek.domain.Viitteet;
 import bibtek.io.IO;
+import java.util.HashSet;
 
 public class Bibtex {
 
@@ -74,28 +75,27 @@ public class Bibtex {
         String s = io.fileToString();
         String[] lines = s.split("\\|");
         String id = "";
-        Reference readedref= new Reference();
-        
-        for(String currentLine : lines) {
-            if (currentLine.isEmpty()) continue;
-            else if(currentLine.charAt(0)=='@'){
+        Reference readedref = new Reference();
+
+        for (String currentLine : lines) {
+            if (currentLine.isEmpty()) {
+                continue;
+            } else if (currentLine.charAt(0) == '@') {
                 String[] t = currentLine.split("\\{");
                 readedref.setEntryType(t[0].substring(1));
-                id = t[1].substring(0,t[1].length()-1);
+                id = t[1].substring(0, t[1].length() - 1);
                 readedref.setId(id);
-            }
-            else if (currentLine.charAt(0)=='}'){
+            } else if (currentLine.charAt(0) == '}') {
                 references.add(id, readedref);
-                readedref=new Reference();
-            }
-            else {
+                readedref = new Reference();
+            } else {
                 String[] fields = currentLine.split(" = ");
                 String data = readedref.korjaaKirjaimet(fields[1]).replaceAll("([\\{}])", "");
-                data = data.substring(0,data.length()-1);
-                readedref.setField(fields[0], data); 
+                data = data.substring(0, data.length() - 1);
+                readedref.setField(fields[0], data);
             }
         }
-       
+
     }
 
     public void run() {
@@ -103,8 +103,10 @@ public class Bibtex {
         lataaViitteet();
         String input;
         while (true) {  //sitten aletaan käsittelemään muita syötteitä
-            
-            if (ref!=null) {io.print("Current ref: "+ref.getData().get("title"));}
+
+            if (ref != null) {
+                io.print("Current ref: " + ref.getData().get("title"));
+            }
             io.print("Enter create if you want to create a reference.\n"
                     + "Enter search if you want to search from files.\n"
                     + "Enter plain if you want to read reference in plaintext.\n"
@@ -120,7 +122,7 @@ public class Bibtex {
                 if (this.ref == null || this.ref.refInBibtex() == null) {
                     io.print("Error in creating bibtex reference!\n"
                             + "Remember that the required fields are: author, year and title\n");
-                }else{
+                } else {
                     io.print("Created new reference!");
                 }
             } else if (input.equalsIgnoreCase("save")) {
@@ -150,19 +152,20 @@ public class Bibtex {
             } else if (input.equals("")) {
                 io.print("Bye!\n");
                 break;
-            }
-            else if (input.equals("list")) {
-               io.print(references.toString());
-            }
-            else if (input.equals("biblist")) {
+            } else if (input.equals("list")) {
+                io.print(references.toString());
+            } else if (input.equals("biblist")) {
                 io.print(references.viitteetInBibtex());
-            }
-            else if (input.equals("search")) {
-                io.print(references.haeViitteista(io.readUserInput("Mitä haetaan?")).toString());
-            }
-            else if (input.equals("select")) {
-                io.print(references.toString()+"----------------------");
-                ref=references.getViitteet().get(io.readUserInput("kirjoita id"));
+            } else if (input.equals("search")) {
+                HashSet<Reference> match = references.haeViitteista(io.readUserInput("Mitä haetaan?"));
+                if (match == null) {
+                    io.print("No matches!");
+                } else {
+                    io.print(match.toString());
+                }
+            } else if (input.equals("select")) {
+                io.print(references.toString() + "----------------------");
+                ref = references.getViitteet().get(io.readUserInput("kirjoita id"));
             }
         }
     }

@@ -18,16 +18,19 @@ public class InputHandler implements IO {
         this.sc = new Scanner(System.in);
     }
 
+    @Override
     public String readUserInput(String prompt) {
         System.out.print(prompt + " ");
         return sc.nextLine();
     }
 
+    @Override
     public void print(String s) {
         System.out.println(s);
     }
 
     //luo tiedoston johon viitteet tallennetaan, mikäli ei aiemmin ollut olemassa
+    @Override
     public void initBibtexFile(String filename) {
         this.refs = new File(filename + ".bib");
         try {
@@ -40,6 +43,7 @@ public class InputHandler implements IO {
     }
 
     //tallentaa tiedot yhteen refs.bib -tiedostoon
+    @Override
     public boolean saveRefstoFile(String s) {
         if (this.refs == null) {
             return false;
@@ -57,6 +61,7 @@ public class InputHandler implements IO {
         }
     }
 
+    @Override
     public void selectFile() {
         String input;
         print("By default your reference file name is refs.bib.\n"
@@ -79,6 +84,7 @@ public class InputHandler implements IO {
         }
     }
 
+    @Override
     public String fileToString() {
         try {
             Scanner sca = new Scanner(refs);
