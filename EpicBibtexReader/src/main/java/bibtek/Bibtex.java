@@ -46,20 +46,7 @@ public class Bibtex {
 
         Character alku = 'a';
         int a = alku.charValue();
-
-        while (true) {  // tarkistaa onko ID jo käytössä ja jos on niin vaihtaa viimeisen merkin uuteen.
-            if (references.containsKey(newID)) {
-                newID = newID.substring(0, newID.length() - 2);
-
-                newID = newID + (char) a;
-                a++;
-            } else {
-                references.add(newID, ref);
-                ref.setId(newID);
-                break;
-            }
-        }
-
+        references.add(ref);
     }
 
     private String generoiId(String author, String year) {
@@ -68,6 +55,21 @@ public class Bibtex {
             retID += s.charAt(0);
         }
         retID += year.substring(year.length() - 2);
+        
+        
+        Character alku = 'a';
+        int a = alku.charValue();
+
+        while (true) {  // tarkistaa onko ID jo käytössä ja jos on niin vaihtaa viimeisen merkin uuteen.
+            if (references.containsKey(retID)) {
+                retID = retID.substring(0, retID.length() - 2);
+
+                retID = retID + (char) a;
+                a++;
+            } else {
+                break;
+            }
+        }
         return retID;
     }
 
@@ -86,7 +88,7 @@ public class Bibtex {
                 id = t[1].substring(0, t[1].length() - 1);
                 readedref.setId(id);
             } else if (currentLine.charAt(0) == '}') {
-                references.add(id, readedref);
+                references.add(readedref);
                 readedref = new Reference();
             } else {
                 String[] fields = currentLine.split(" = ");

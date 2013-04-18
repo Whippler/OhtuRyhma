@@ -20,11 +20,11 @@ public class Viitteet {
         viitteet = new HashMap<String, Reference>();
     }
     
-    public boolean add(String id, Reference viite){
-        if(viitteet.containsKey(id)){
+    public boolean add(Reference viite){
+        if(viitteet.containsKey(viite.getId())){
             return false;
         } else {
-            viitteet.put(id, viite);
+            viitteet.put(viite.getId(), viite);
             return true;
         }
         
