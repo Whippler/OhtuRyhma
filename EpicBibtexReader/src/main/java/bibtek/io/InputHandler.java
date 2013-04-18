@@ -1,12 +1,10 @@
 package bibtek.io;
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Scanner;
-
 
 //POistin IO rajapinnan käytöstä koska laiska
 public class InputHandler implements IO {
@@ -44,16 +42,23 @@ public class InputHandler implements IO {
 
     //tallentaa tiedot yhteen refs.bib -tiedostoon
     @Override
-    public boolean saveRefstoFile(String s) {
+    public boolean saveRefstoFile(String text, String path) {
         if (this.refs == null) {
             return false;
         }
+        String refOld = refs.getAbsolutePath();
         try {
-            FileWriter fw = new FileWriter(this.refs.getName(), true);
-            BufferedWriter bw = new BufferedWriter(fw);
-            bw.write(s);
+            if (!path.isEmpty()) {
+                refs = new File(path+".bib");
+                refs.createNewFile();
+            }
+            PrintWriter bw = new PrintWriter(refs);
+            bw.print("");
+            bw.write(text);
             bw.close();
-            fw.close();
+            if (path.isEmpty()) {
+                refs = new File(refOld);
+            }
             return true;
         } catch (Exception e) {
             e.printStackTrace(System.out);
@@ -67,7 +72,7 @@ public class InputHandler implements IO {
         print("By default your reference file name is refs.bib.\n"
                 + "Do you wish to change this setting? (y/n)\n");
 
-        while (true) {  //ensin kysytään käyttäjältä mihin tiedostoon tallennetaan
+        while (refs == null || !refs.exists()) {  //ensin kysytään käyttäjältä mihin tiedostoon tallennetaan
             input = readUserInput(">");
             if (input.equalsIgnoreCase("n")) {
                 this.initBibtexFile("refs");
@@ -76,11 +81,15 @@ public class InputHandler implements IO {
                 input = "";
                 while (input.length() == 0) {
                     input = readUserInput("filename:");
+                    if (input.isEmpty()) {
+                        continue;
+                    }
                     this.initBibtexFile(input);
                     print("References will now be saved into " + input + ".bib");
                 }
+            } else {
+                continue;
             }
-            break;
         }
     }
 

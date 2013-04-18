@@ -29,7 +29,7 @@ public class StubIO implements IO {
     }
 
     @Override
-    public boolean saveRefstoFile(String s) {
+    public boolean saveRefstoFile(String s, String path) {
         return true;
     }
 

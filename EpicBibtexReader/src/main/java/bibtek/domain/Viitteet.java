@@ -4,7 +4,6 @@
  */
 package bibtek.domain;
 
-import bibtek.domain.Reference;
 import java.util.HashMap;
 import java.util.HashSet;
 
