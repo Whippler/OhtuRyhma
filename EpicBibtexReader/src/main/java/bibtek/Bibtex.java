@@ -43,13 +43,16 @@ public class Bibtex {
         }
 
         String newID = generoiId(ref.getData().get("author"), ref.getData().get("year"));
-
+        ref.setId(newID);
         Character alku = 'a';
         int a = alku.charValue();
         references.add(ref);
     }
 
     private String generoiId(String author, String year) {
+        if(author == null || year == null){
+            return "";
+        }
         String retID = "";
         for (String s : author.split(" and ")) {
             retID += s.charAt(0);
