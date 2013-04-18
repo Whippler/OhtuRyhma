@@ -6,8 +6,8 @@ description 'User can create a new reference and save it'
 
 scenario "User leaves program without creating a reference", {
     given 'User starts executing program', {
-		io = new StubIO("n", "")
-		bib = new Bibtex(io)
+			io = new StubIO("n", "")
+			bib = new Bibtex(io)
     }
 
     when 'User enters necessary commands to stop executing', {
