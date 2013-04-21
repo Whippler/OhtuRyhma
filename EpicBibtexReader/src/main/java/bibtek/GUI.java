@@ -30,9 +30,8 @@ public class GUI extends JFrame {
         //private JButton deleteB = new JButton("Delete");
         private JButton listallB = new JButton("List All");
         private JButton bibtexB = new JButton("List Bibtex");
-        private boolean buttonsActive = true;
+        //private boolean buttonsActive = true;
        
-        private JLabel searchL = new JLabel("Search:");
         private JLabel typeL = new JLabel("Type:");
         private JLabel authorL = new JLabel("Author:");
         private JLabel titleL = new JLabel("Title:");
@@ -120,7 +119,7 @@ public class GUI extends JFrame {
             this.middlePanel.add(Box.createHorizontalStrut(10));
             this.middlePanel.add(this.addressL);
             this.middlePanel.add(this.addressF);
-            this.middlePanel.add(Box.createHorizontalStrut(15));
+            this.middlePanel.add(Box.createHorizontalStrut(10));
             this.middlePanel.add(this.addB);
             this.middlePanel.add(Box.createHorizontalStrut(350));
             this.middlePanel.add(this.listallB);
@@ -128,7 +127,7 @@ public class GUI extends JFrame {
             
 
             this.bottomPanel.setLayout(new BoxLayout(this.bottomPanel, BoxLayout.X_AXIS));
-            this.bottomPanel.setPreferredSize(new Dimension(700, 400));
+            this.bottomPanel.setPreferredSize(new Dimension(700, 500));
             this.bottomPanel.add(this.scroll);
             this.scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
             
@@ -137,12 +136,51 @@ public class GUI extends JFrame {
             this.textArea.setWrapStyleWord(true);
             this.textArea.setEditable(false);
             this.textArea.setText("  Welcome to EpicBibtexReader! \n");
-
             
-            //nappien ActionListenerien alustus
-            //this.searchB.addActionListener();
+//            this.searchB.addActionListener(new ActionListener() {
+//           
+//		public void actionPerformed(ActionEvent e) {
+//            	-MITÄ NAPPI TEKEE-
+//                }
+//            });
             
-        }            
+//            this.addB.addActionListener(new ActionListener() {
+//           
+//		public void actionPerformed(ActionEvent e) {
+//            	-MITÄ NAPPI TEKEE-
+//                }
+//            });
+            
+//            this.removeB.addActionListener(new ActionListener() {
+//           
+//		public void actionPerformed(ActionEvent e) {
+//            	-MITÄ NAPPI TEKEE-
+//                }
+//            });
+            
+//            this.saveB.addActionListener(new ActionListener() {
+//           
+//		public void actionPerformed(ActionEvent e) {
+//            	-MITÄ NAPPI TEKEE-
+//                }
+//            });
+            
+//            this.listallB.addActionListener(new ActionListener() {
+//           
+//		public void actionPerformed(ActionEvent e) {
+//            	-MITÄ NAPPI TEKEE-
+//                }
+//            });
+            
+//            this.bibtexB.addActionListener(new ActionListener() {
+//           
+//		public void actionPerformed(ActionEvent e) {
+//            	-MITÄ NAPPI TEKEE-
+//                }
+//            });
+            
+        }       
+//            Jos halutaan joku intro viesti, esim. ohjeita sun muuta
 //            public void introDialogue() {
 //		
 //		JDialog intro = new JDialog(this, "joku viesti tai ohje", true);
@@ -153,42 +191,42 @@ public class GUI extends JFrame {
 //            }
 
             
-            private void configureButtons(JButton button) {         
-		
-                button.setAlignmentX(Component.LEFT_ALIGNMENT);  
-            }
-            
-            public void deactivateButtons() {
-		
-		this.searchB.setEnabled(false);
-		this.addB.setEnabled(false);
-		this.removeB.setEnabled(false);
+//            private void configureButtons(JButton button) {         
+//		
+//                button.setAlignmentX(Component.LEFT_ALIGNMENT);  
+//            }
+ 
+                //Tarviiko näitä nappien aktivointeja mihinkään?
+//            public void deactivateButtons() {
+//		
+//		this.searchB.setEnabled(false);
+//		this.addB.setEnabled(false);
+//		this.removeB.setEnabled(false);
 //		this.saveB.setEnabled(false);
 //		this.deleteB.setEnabled(false);
-		this.buttonsActive = false;
-            }
-            
-            public void activateButtons() {
-		
-		this.searchB.setEnabled(true);
-		this.addB.setEnabled(true);
-		this.removeB.setEnabled(true);
+//		this.buttonsActive = false;
+//            }
+//            
+//            public void activateButtons() {
+//		
+//		this.searchB.setEnabled(true);
+//		this.addB.setEnabled(true);
+//		this.removeB.setEnabled(true);
 //		this.saveB.setEnabled(true);
 //		this.deleteB.setEnabled(true);
-		this.buttonsActive = true;
-            }
+//		this.buttonsActive = true;
+//            }
             
-            /*public void updateTextArea(String text) {
+            public void updateTextArea(String text) {
 		
-		//teksti uudelta riviltä?
-		String lineStart = "\n   ";
+                //tyhjentää tekstikentän kun jotain uutta tulee
+                textArea.setText("");
 		
-		this.textArea.append(text + lineStart);
+		this.textArea.append(text);
 		
 		//textArea näyttää uusimman päivityksen
-		
 		this.textArea.setText(this.textArea.getText());
-            }*/
+            }
 
         
             public static void main(String[] args) {
