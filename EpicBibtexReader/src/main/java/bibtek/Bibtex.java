@@ -3,6 +3,7 @@ package bibtek;
 import bibtek.domain.Reference;
 import bibtek.domain.Viitteet;
 import bibtek.io.IO;
+import java.util.Arrays;
 import java.util.HashSet;
 
 public class Bibtex {
@@ -20,7 +21,7 @@ public class Bibtex {
     public void createReference() {
         String inp;
         this.ref = new Reference();
-        io.print("Give the type of your entry\n");
+        io.print("Give the type of your entry\n\n"+Arrays.toString(ref.entrytypes));
         while (true) {    //kysytään käyttäjältä minkä tyyppinen viite luodaan
             inp = io.readUserInput(">");
             if (ref.setEntryType(inp)) { //jos käyttäjän syöttämä viitteen tyyppi hyväksytään
@@ -29,45 +30,57 @@ public class Bibtex {
             io.print("Entry type not valid\n");
         }
         io.print("Give the name of the field, press enter, then give content.\n"
-                + "Hit enter instead of typing in a field when you are done\n");
+                + "Hit enter instead of typing in a field when you are done\n\n"
+                +Arrays.toString(ref.fieldtypes)+"\n Author, Year and Title are required");
         String field;
         while (true) {    //kysytään ensin mikä kenttä, sen jälkeen kentän sisältö
             field = io.readUserInput(">");
-            if (field.equals("")) {
+            if (field.equals("") && ref.checkIfValid()) {
                 break;
             }
+            if (field.equals("")) {
+                io.print("Author, Year and Title are required");
+                continue;
+            }
+            if(field.toLowerCase().equals("author")) io.print("Author is presented in format: Firstname, Surrname & ...");
             inp = io.readUserInput(field + ":");
-            if (!ref.setField(field, inp)) {
+            if (!ref.setField(field.toLowerCase(), inp)) {
                 io.print("Invalid input! Check that the field is written correctly and the content is not empty.");
             }
+            
         }
 
         String newID = generoiId(ref.getData().get("author"), ref.getData().get("year"));
-
+        ref.setId(newID);
         Character alku = 'a';
         int a = alku.charValue();
-
-        while (true) {  // tarkistaa onko ID jo käytössä ja jos on niin vaihtaa viimeisen merkin uuteen.
-            if (references.containsKey(newID)) {
-                newID = newID.substring(0, newID.length() - 2);
-
-                newID = newID + (char) a;
-                a++;
-            } else {
-                references.add(newID, ref);
-                ref.setId(newID);
-                break;
-            }
-        }
-
+        references.add(ref);
     }
 
     private String generoiId(String author, String year) {
+        if(author == null || year == null){
+            return "";
+        }
         String retID = "";
         for (String s : author.split(" and ")) {
             retID += s.charAt(0);
         }
         retID += year.substring(year.length() - 2);
+        
+        
+        Character alku = 'a';
+        int a = alku.charValue();
+
+        while (true) {  // tarkistaa onko ID jo käytössä ja jos on niin vaihtaa viimeisen merkin uuteen.
+            if (references.containsKey(retID)) {
+                retID = retID.substring(0, retID.length() - 2);
+
+                retID = retID + (char) a;
+                a++;
+            } else {
+                break;
+            }
+        }
         return retID;
     }
 
@@ -86,7 +99,7 @@ public class Bibtex {
                 id = t[1].substring(0, t[1].length() - 1);
                 readedref.setId(id);
             } else if (currentLine.charAt(0) == '}') {
-                references.add(id, readedref);
+                references.add(readedref);
                 readedref = new Reference();
             } else {
                 String[] fields = currentLine.split(" = ");
@@ -126,11 +139,14 @@ public class Bibtex {
                     io.print("Created new reference!");
                 }
             } else if (input.equalsIgnoreCase("save")) {
-                if (this.ref == null || this.ref.refInBibtex() == null) {
+                if (this.references == null || this.references.viitteetInBibtex() == null) {
                     io.print("No current reference to save!");
                 } else {
-                    if (io.saveRefstoFile(references.viitteetInBibtex())) {
-                        io.print("Created a new reference and added it to file\n");
+                   input =  io.readUserInput("Define save location, or leave empty to write loaded file\n"
+                           + "The whole path must be presented, in Linux ex. /home/user/folder/filename.bib\n"
+                           + "in Windows, ex. C:/Users/user/Documents/folder/file.bib:\n\n");
+                    if (io.saveRefstoFile(references.viitteetInBibtex(), input)) {
+                        io.print("References added it to file\n");
                     } else {
                         io.print("Error in writing to a file!");
                     }

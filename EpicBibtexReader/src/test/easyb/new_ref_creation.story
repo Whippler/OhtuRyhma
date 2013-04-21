@@ -6,8 +6,8 @@ description 'User can create a new reference and save it'
 
 scenario "User leaves program without creating a reference", {
     given 'User starts executing program', {
-		io = new StubIO("n", "")
-		bib = new Bibtex(io)
+			io = new StubIO("n", "")
+			bib = new Bibtex(io)
     }
 
     when 'User enters necessary commands to stop executing', {
@@ -67,8 +67,7 @@ scenario "User creates an erroneus reference", {
 	}
 
 	then 'User gets the error message', {
-		io.getPrints().shouldHave("Error in creating bibtex reference!\n"
-								+ "Remember that the required fields are: author, year and title")
+		io.getPrints().shouldHave("Author, Year and Title are required")
 	}
 }
 
@@ -84,7 +83,7 @@ scenario "User creates an erroneus reference and tries to view it in plaintext",
 	}
 
 	then 'User gets the error message', {
-		io.getPrints().shouldHave("No current reference to view!")
+		io.getPrints().shouldHave("Invalid input! Check that the field is written correctly and the content is not empty.")
 	}
 }
 
@@ -99,13 +98,13 @@ scenario "User creates an erroneus reference and tries to view it in bibtex", {
 	}
 
 	then 'User gets the error message', {
-		io.getPrints().shouldHave("No current reference to view!")
+		io.getPrints().shouldHave("Invalid input! Check that the field is written correctly and the content is not empty.")
 	}
 }
 
 scenario "User creates an erroneus reference and tries to save it", {
 	given 'User starts executing program', {
-		io = new StubIO("n", "create", "article", "author", "Väinämöinen", "year", "1888", "", "save", "")
+		io = new StubIO("n", "create", "article", "author", "Väinämöinen", "year", "1888", "", "save", "", "")
 		bib = new Bibtex(io)
 	}
 
@@ -114,7 +113,7 @@ scenario "User creates an erroneus reference and tries to save it", {
 	}
 
 	then 'User gets the error message', {
-		io.getPrints().shouldHave("No current reference to save!")
+		io.getPrints().shouldHave("Invalid input! Check that the field is written correctly and the content is not empty.")
 	}
 }
 

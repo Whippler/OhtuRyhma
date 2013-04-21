@@ -6,7 +6,7 @@ public interface IO {
 
     void print(String s);
     
-    boolean saveRefstoFile(String s);
+    boolean saveRefstoFile(String s, String path);
     
     void selectFile();
     

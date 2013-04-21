@@ -5,7 +5,15 @@ import java.util.Iterator;
 import java.util.Map;
 
 public class Reference {
-
+    
+    public final String[] fieldtypes = {"address", "annote", "author", "booktitle", "chapter", "crossref", "edition",
+            "editor", "howpublished", "institution", "journal", "key", "month", "note", "number",
+            "organization", "pages", "publisher", "school", "series", "title", "type", "volume", "year"};
+    public final String[] entrytypes={"article", "book", "booklet", "conference", "inbook",
+            "incollection", "inproceedings", "manual", "mastersthesis",
+            "misc", "phdthesis", "proceedings", "techreport", "unpublished",
+            "collection"};
+       
     private HashMap<String, String> data;
     private String id, entryType;
 
@@ -29,12 +37,8 @@ public class Reference {
 
     //asettaa viitteen tyypin, esim. article, book jne.
     public boolean setEntryType(String entryType) {
-        String[] accepted = {"article", "book", "booklet", "conference", "inbook",
-            "incollection", "inproceedings", "manual", "mastersthesis",
-            "misc", "phdthesis", "proceedings", "techreport", "unpublished",
-            "collection"};
         boolean match = false;
-        for (String s : accepted) {
+        for (String s : entrytypes) {
             if (s.equalsIgnoreCase(entryType)) {
                 match = true;
             }
@@ -55,11 +59,9 @@ public class Reference {
 //    }
     //tallentaa kentän nimen ja sisällön hashmappiin
     public boolean setField(String field, String content) {
-        String[] accepted = {"address", "annote", "author", "booktitle", "chapter", "crossref", "edition",
-            "editor", "howpublished", "institution", "journal", "key", "month", "note", "number",
-            "organization", "pages", "publisher", "school", "series", "title", "type", "volume", "year"};
+        
         boolean match = false;
-        for (String s : accepted) {
+        for (String s : fieldtypes) {
             if (field.equalsIgnoreCase(s)) {  //tarkistetaan onko kenttä jokin hyväksytyistä
                 match = true;
             }
@@ -135,7 +137,13 @@ public class Reference {
         tmp = tmp.substring(0, tmp.length() - 2);
         return tmp;
     }
-
+    
+    public boolean checkIfValid(){
+        if(data.containsKey("author") && data.containsKey("year") && data.containsKey("title"))
+            return true;
+        return false;
+    }
+    
     @Override
     public String toString() {
         return refInPlainText();
