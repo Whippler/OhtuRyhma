@@ -12,8 +12,12 @@ public class InputHandler implements IO {
     private File refs;
     private Scanner sc;
 
+    public InputHandler(Scanner s) {
+        this.sc = s;
+    }
+
     public InputHandler() {
-        this.sc = new Scanner(System.in);
+        this(new Scanner(System.in));
     }
 
     @Override
@@ -29,8 +33,8 @@ public class InputHandler implements IO {
 
     //luo tiedoston johon viitteet tallennetaan, mikäli ei aiemmin ollut olemassa
     @Override
-    public void initBibtexFile(String filename) {
-        this.refs = new File(filename + ".bib");
+    public void initBibtexFile(File file) {
+        this.refs = file;
         try {
             if (!this.refs.exists()) {
                 this.refs.createNewFile();
@@ -49,10 +53,10 @@ public class InputHandler implements IO {
         String refOld = refs.getAbsolutePath();
         try {
             if (!path.isEmpty()) {
-                refs = new File(path+".bib");
+                refs = new File(path + ".bib");
                 refs.createNewFile();
             }
-            PrintWriter bw = new PrintWriter(refs);
+            PrintWriter bw = new PrintWriter(refs); 
             bw.print("");
             bw.write(text);
             bw.close();
@@ -75,7 +79,7 @@ public class InputHandler implements IO {
         while (refs == null || !refs.exists()) {  //ensin kysytään käyttäjältä mihin tiedostoon tallennetaan
             input = readUserInput(">");
             if (input.equalsIgnoreCase("n")) {
-                this.initBibtexFile("refs");
+                this.initBibtexFile(new File("refs.bib"));
                 break;
             } else if (input.equalsIgnoreCase("y")) {
                 input = "";
@@ -84,7 +88,7 @@ public class InputHandler implements IO {
                     if (input.isEmpty()) {
                         continue;
                     }
-                    this.initBibtexFile(input);
+                    this.initBibtexFile(new File(input + ".bib"));
                     print("References will now be saved into " + input + ".bib");
                 }
             } else {

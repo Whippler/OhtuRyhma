@@ -119,7 +119,7 @@ scenario "User creates an erroneus reference and tries to save it", {
 
 scenario "User decides to change the file in which references are stored", {
 	given 'User starts executing program', {
-		io = new StubIO("y", "asd", "")
+		io = new StubIO("y", "asd.bib", "")
 		bib = new Bibtex(io)
 	}
 

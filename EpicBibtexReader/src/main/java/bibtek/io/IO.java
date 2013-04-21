@@ -1,5 +1,7 @@
 package bibtek.io;
 
+import java.io.File;
+
 public interface IO {
     
     String readUserInput(String prompt);
@@ -12,6 +14,6 @@ public interface IO {
     
     String fileToString();
     
-    void initBibtexFile(String filename);
+    void initBibtexFile(File file);
     
 }

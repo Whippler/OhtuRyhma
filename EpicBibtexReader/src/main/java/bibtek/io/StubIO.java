@@ -1,5 +1,6 @@
 package bibtek.io;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class StubIO implements IO {
@@ -36,17 +37,15 @@ public class StubIO implements IO {
     @Override
     public void selectFile() {
         String in = readUserInput(">");
-        if (in.equalsIgnoreCase("n")) {
-            return;
-        } else if (in.equalsIgnoreCase("y")) {
+        if (in.equalsIgnoreCase("y")) {
             String fn = readUserInput("filename: ");
-            initBibtexFile(fn);
+            initBibtexFile(new File(fn));
         }
     }
 
     @Override
-    public void initBibtexFile(String filename) {
-        print("References will now be saved into " + filename + ".bib");
+    public void initBibtexFile(File file) {
+        print("References will now be saved into " + file.getName());
     }
 
     public ArrayList<String> getPrints() {
