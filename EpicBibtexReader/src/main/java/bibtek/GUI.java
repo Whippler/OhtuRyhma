@@ -4,7 +4,7 @@ import java.awt.*;
 import javax.swing.*;
 
 public class GUI extends JFrame {
-             //sit Bibtex extends Observable ja implements ActionListener?
+ //sit Bibtex extends Observable ja implements ActionListener?
     
         //private Bibtex bibtex;
         
@@ -23,6 +23,7 @@ public class GUI extends JFrame {
         private JPanel leftPanel = new JPanel();
         private JPanel rightPanel = new JPanel();
         
+        //private JButton pathB = new JButton("Select Path");
         private JButton searchB = new JButton("Search >>");
         private JButton addB = new JButton("Add Reference");
         private JButton removeB = new JButton("Delete ID >>");
@@ -32,6 +33,7 @@ public class GUI extends JFrame {
         private JButton bibtexB = new JButton("List Bibtex");
         //private boolean buttonsActive = true;
        
+        private JLabel pathL = new JLabel("File Path:");
         private JLabel typeL = new JLabel("Type:");
         private JLabel authorL = new JLabel("Author:");
         private JLabel titleL = new JLabel("Title:");
@@ -43,7 +45,8 @@ public class GUI extends JFrame {
         private JLabel volumeL = new JLabel("Volume:");
         private JLabel addressL = new JLabel("Address:");
         
-        private JTextField searchF = new JTextField(20);
+        private JTextField pathF = new JTextField(15);
+        private JTextField searchF = new JTextField(15);
         private JTextField typeF = new JTextField(7);
         private JTextField authorF = new JTextField(19);
         private JTextField titleF = new JTextField(20);
@@ -74,7 +77,12 @@ public class GUI extends JFrame {
             //määritellään paneelien yksityiskohdat
             this.topPanel.setLayout(new BoxLayout(this.topPanel, BoxLayout.X_AXIS));
             this.topPanel.setPreferredSize(new Dimension(700, 50));
-            this.topPanel.add(Box.createHorizontalStrut(210));
+            this.topPanel.add(Box.createHorizontalStrut(20));
+            this.topPanel.add(this.pathL);
+            this.topPanel.add(Box.createHorizontalStrut(2));
+            this.topPanel.add(this.pathF);
+            this.pathF.setMaximumSize(pathF.getPreferredSize());
+            this.topPanel.add(Box.createHorizontalStrut(30));
             this.topPanel.add(this.removeB);
             this.topPanel.add(Box.createHorizontalStrut(2));
             this.topPanel.add(this.deleteIDF);
@@ -227,8 +235,6 @@ public class GUI extends JFrame {
 		//textArea näyttää uusimman päivityksen
 		this.textArea.setText(this.textArea.getText());
             }
-
-        
             public static void main(String[] args) {
 
                 GUI gui = new GUI();
