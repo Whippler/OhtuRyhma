@@ -1,5 +1,6 @@
 package bibtek;
 
+import bibtek.sync.GitHubSync;
 import bibtek.domain.Reference;
 import bibtek.domain.Viitteet;
 import bibtek.io.IO;
@@ -39,7 +40,7 @@ public class Bibtex {
                 break;
             }
             if (field.equals("")) {
-                io.print("Author, Year and Title are required");
+                io.print("Error! Author, Year and Title are required");
                 continue;
             }
             if (field.toLowerCase().equals("author")) {
@@ -59,8 +60,8 @@ public class Bibtex {
         references.add(ref);
     }
 
-    private String generoiId(String author, String year) {
-        if (author == null || year == null) {
+    public String generoiId(String author, String year) {
+        if (author == null || year == null || year.length() < 2) {
             return "";
         }
         String retID = "";
@@ -75,8 +76,16 @@ public class Bibtex {
 
         while (true) {  // tarkistaa onko ID jo käytössä ja jos on niin vaihtaa viimeisen merkin uuteen.
             if (references.containsKey(retID)) {
-                retID = retID.substring(0, retID.length() - 2);
-
+                if((char) a == 'a'){
+                    retID = retID.substring(0, retID.length() );
+                }else if((char) a == 'z'){
+                    retID = retID.substring(0, retID.length()-1);
+                    retID = retID + 'a';
+                    a = alku.charValue();
+                    continue;
+                } else{
+                    retID = retID.substring(0, retID.length()-1);
+                }
                 retID = retID + (char) a;
                 a++;
             } else {
@@ -114,9 +123,30 @@ public class Bibtex {
     }
 
     public void run() {
-        io.selectFile();
+        String input = "";
+        io.print("By default your reference file name is refs.bib.\n"
+                + "Do you wish to change this setting? (y/n)\n");
+        while(true){
+            input = io.readUserInput(">");
+            if (input.equalsIgnoreCase("n")) {
+                io.selectFile("refs");
+                break;
+            } else if (input.equalsIgnoreCase("y")) {
+                input = "";
+                while (input.length() == 0) {
+                    input = io.readUserInput("filename:");
+                    if (input.isEmpty()) {
+                        continue;
+                    }
+                    io.selectFile(input);
+                    io.print("References will now be saved into " + input + ".bib");
+                    
+                }
+                break;
+            }
+        }
         lataaViitteet();
-        String input;
+
         while (true) {  //sitten aletaan käsittelemään muita syötteitä
 
             if (ref != null) {
@@ -142,14 +172,14 @@ public class Bibtex {
                     io.print("Created new reference!");
                 }
             } else if (input.equalsIgnoreCase("save")) {
-                if (this.references == null || this.references.viitteetInBibtex() == null) {
-                    io.print("No current reference to save!");
+                if (this.references == null || this.references.viitteetInBibtex().equals("")) {
+                    io.print("No current references to save!");
                 } else {
                     input = io.readUserInput("Define save location, or leave empty to write loaded file\n"
                             + "The whole path must be presented, in Linux ex. /home/user/folder/filename.bib\n"
                             + "in Windows, ex. C:/Users/user/Documents/folder/file.bib:\n\n");
                     if (io.saveRefstoFile(references.viitteetInBibtex(), input)) {
-                        io.print("References added it to file\n");
+                        io.print("References added to the file\n");
                     } else {
                         io.print("Error in writing to a file!");
                     }

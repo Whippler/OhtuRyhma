@@ -1,6 +1,7 @@
 
-package bibtek;
+package bibtek.sync;
 
+import bibtek.sync.GitHubCommand;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;

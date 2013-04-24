@@ -10,7 +10,7 @@ public interface IO {
     
     boolean saveRefstoFile(String s, String path);
     
-    void selectFile();
+    void selectFile(String filename);
     
     String fileToString();
     

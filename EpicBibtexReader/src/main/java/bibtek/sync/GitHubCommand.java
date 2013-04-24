@@ -1,5 +1,5 @@
 
-package bibtek;
+package bibtek.sync;
 
 import java.io.BufferedReader;
 import java.io.File;

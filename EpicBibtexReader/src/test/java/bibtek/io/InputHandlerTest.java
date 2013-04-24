@@ -77,7 +77,7 @@ public class InputHandlerTest {
     public void saveRefsToFileToimii() throws IOException {
         io = new InputHandler();
         File testi2 = new File("bibtesti3482956");
-        
+
         testi2.createNewFile();
         io.initBibtexFile(testi2);
         Reference ref = new Reference();
@@ -99,5 +99,44 @@ public class InputHandlerTest {
                 + "year = {2004},"
                 + "}", sisalto);
     }
-     
+
+    @Test
+    public void saveRefsPalauttaaFalseJosTdstoEiOlemassa() {
+        io = new InputHandler();
+        assertFalse(io.saveRefstoFile("palala", null));
+        assertFalse(io.saveRefstoFile(null, null));
+    }
+
+    @Test
+    public void selectFileToimii() {
+        io = new InputHandler();
+        io.selectFile("testi4398537");
+        assertEquals("testi4398537.bib", io.refs.getName());
+    }
+
+    @Test
+    public void selectFileEiTeeMitaanVirheellisillaParametreilla() {
+        io = new InputHandler();
+        io.selectFile("testi4398537");
+        io.selectFile("");
+        assertEquals("testi4398537.bib", io.refs.getName());
+        io.selectFile(null);
+        assertEquals("testi4398537.bib", io.refs.getName());
+    }
+
+    @Test
+    public void fileToStringIlmoittaaJosTdstoEiOlemassa() {
+        io = new InputHandler();
+        assertEquals("file not found", io.fileToString());
+
+        io.refs = new File("testi24884.bib");
+        assertEquals("file not found", io.fileToString());
+    }
+    
+    @Test
+    public void initFileTarkistaaParametrin(){
+        io = new InputHandler();
+       io.initBibtexFile(null);
+       assertEquals(null, io.refs);
+    }
 }

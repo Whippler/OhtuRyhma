@@ -34,7 +34,7 @@ public class StubIOTest {
     @Test
     public void selectFileToimiiJosHalutaanVaihtaaNimea(){
         io = new StubIO("y", "asd.bib");
-        io.selectFile();
+        io.selectFile("asd");
         assertEquals("References will now be saved into asd.bib", io.getPrints().get(io.getPrints().size()-1));
     }
 }

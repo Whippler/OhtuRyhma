@@ -6,10 +6,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
-//POistin IO rajapinnan käytöstä koska laiska
 public class InputHandler implements IO {
 
-    private File refs;
+    public File refs;
     private Scanner sc;
 
     public InputHandler(Scanner s) {
@@ -34,6 +33,9 @@ public class InputHandler implements IO {
     //luo tiedoston johon viitteet tallennetaan, mikäli ei aiemmin ollut olemassa
     @Override
     public void initBibtexFile(File file) {
+        if (file == null) {
+            return;
+        }
         this.refs = file;
         try {
             if (!this.refs.exists()) {
@@ -56,7 +58,7 @@ public class InputHandler implements IO {
                 refs = new File(path + ".bib");
                 refs.createNewFile();
             }
-            PrintWriter bw = new PrintWriter(refs); 
+            PrintWriter bw = new PrintWriter(refs);
             bw.print("");
             bw.write(text);
             bw.close();
@@ -71,37 +73,20 @@ public class InputHandler implements IO {
     }
 
     @Override
-    public void selectFile() {
-        String input;
-        print("By default your reference file name is refs.bib.\n"
-                + "Do you wish to change this setting? (y/n)\n");
-
-        while (refs == null || !refs.exists()) {  //ensin kysytään käyttäjältä mihin tiedostoon tallennetaan
-            input = readUserInput(">");
-            if (input.equalsIgnoreCase("n")) {
-                this.initBibtexFile(new File("refs.bib"));
-                break;
-            } else if (input.equalsIgnoreCase("y")) {
-                input = "";
-                while (input.length() == 0) {
-                    input = readUserInput("filename:");
-                    if (input.isEmpty()) {
-                        continue;
-                    }
-                    this.initBibtexFile(new File(input + ".bib"));
-                    print("References will now be saved into " + input + ".bib");
-                }
-            } else {
-                continue;
-            }
+    public void selectFile(String filename) {
+        if (filename != null && !filename.equals("")) {
+            this.initBibtexFile(new File(filename + ".bib"));
         }
     }
 
     @Override
     public String fileToString() {
+        if (this.refs == null) {
+            return "file not found";
+        }
+        String tmp = "";
         try {
             Scanner sca = new Scanner(refs);
-            String tmp = "";
             while (sca.hasNextLine()) {
                 tmp += sca.nextLine();
                 tmp += "|";

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 public class StubIO implements IO {
 
+    private String filename;
     private String[] inputs;
     private int i;
     private ArrayList<String> prints;
@@ -13,6 +14,7 @@ public class StubIO implements IO {
         this.inputs = inputs;
         this.prints = new ArrayList<String>();
         this.i = 0;
+        this.filename = "";
     }
 
     @Override
@@ -35,12 +37,9 @@ public class StubIO implements IO {
     }
 
     @Override
-    public void selectFile() {
-        String in = readUserInput(">");
-        if (in.equalsIgnoreCase("y")) {
-            String fn = readUserInput("filename: ");
-            initBibtexFile(new File(fn));
-        }
+    public void selectFile(String filename) {
+        this.filename = filename + ".bib";
+        initBibtexFile(new File(this.filename));
     }
 
     @Override
@@ -54,6 +53,13 @@ public class StubIO implements IO {
 
     @Override
     public String fileToString() {
-        return "";
+        if (this.filename.equals("refs.bib")) {
+            return "@article{VV88,|author = {Vainio, Juha and Vanhapoika, Nestori},|"
+                    + "title = {Mies ja norppa},|year = {1988},|}|||"
+                    + "@book{M99,|author = {Mehil\\\"{a}inen, Matti},|"
+                    + "title = {Kuhnurin el\\\"{a}m\\\"{a}\\\"{a}},|year = {1999},|}|||";
+        } else {
+            return "";
+        }
     }
 }

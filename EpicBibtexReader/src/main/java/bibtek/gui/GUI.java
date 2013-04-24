@@ -1,4 +1,4 @@
-package bibtek;
+package bibtek.gui;
 
 import java.awt.*;
 import javax.swing.*;
