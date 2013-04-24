@@ -21,7 +21,7 @@ public class Bibtex {
     public void createReference() {
         String inp;
         this.ref = new Reference();
-        io.print("Give the type of your entry\n\n"+Arrays.toString(ref.entrytypes));
+        io.print("Give the type of your entry\n\n" + Arrays.toString(ref.entrytypes));
         while (true) {    //kysytään käyttäjältä minkä tyyppinen viite luodaan
             inp = io.readUserInput(">");
             if (ref.setEntryType(inp)) { //jos käyttäjän syöttämä viitteen tyyppi hyväksytään
@@ -31,7 +31,7 @@ public class Bibtex {
         }
         io.print("Give the name of the field, press enter, then give content.\n"
                 + "Hit enter instead of typing in a field when you are done\n\n"
-                +Arrays.toString(ref.fieldtypes)+"\n Author, Year and Title are required");
+                + Arrays.toString(ref.fieldtypes) + "\n Author, Year and Title are required");
         String field;
         while (true) {    //kysytään ensin mikä kenttä, sen jälkeen kentän sisältö
             field = io.readUserInput(">");
@@ -42,12 +42,14 @@ public class Bibtex {
                 io.print("Author, Year and Title are required");
                 continue;
             }
-            if(field.toLowerCase().equals("author")) io.print("Author is presented in format: Firstname, Surrname & ...");
+            if (field.toLowerCase().equals("author")) {
+                io.print("Author is presented in format: Firstname, Surrname & ...");
+            }
             inp = io.readUserInput(field + ":");
             if (!ref.setField(field.toLowerCase(), inp)) {
                 io.print("Invalid input! Check that the field is written correctly and the content is not empty.");
             }
-            
+
         }
 
         String newID = generoiId(ref.getData().get("author"), ref.getData().get("year"));
@@ -58,7 +60,7 @@ public class Bibtex {
     }
 
     private String generoiId(String author, String year) {
-        if(author == null || year == null){
+        if (author == null || year == null) {
             return "";
         }
         String retID = "";
@@ -66,8 +68,8 @@ public class Bibtex {
             retID += s.charAt(0);
         }
         retID += year.substring(year.length() - 2);
-        
-        
+
+
         Character alku = 'a';
         int a = alku.charValue();
 
@@ -128,6 +130,7 @@ public class Bibtex {
                     + "Enter biblist to list all references in bibtex.\n"
                     + "Enter select if you want to select a certain reference.\n"
                     + "Enter save if you want to save the references to a file.\n"
+                    + "Enter git if you want to sync your files to github\n"
                     + "Press enter if you want to quit.\n");
             input = io.readUserInput(">");
             if (input.equalsIgnoreCase("create")) {
@@ -142,9 +145,9 @@ public class Bibtex {
                 if (this.references == null || this.references.viitteetInBibtex() == null) {
                     io.print("No current reference to save!");
                 } else {
-                   input =  io.readUserInput("Define save location, or leave empty to write loaded file\n"
-                           + "The whole path must be presented, in Linux ex. /home/user/folder/filename.bib\n"
-                           + "in Windows, ex. C:/Users/user/Documents/folder/file.bib:\n\n");
+                    input = io.readUserInput("Define save location, or leave empty to write loaded file\n"
+                            + "The whole path must be presented, in Linux ex. /home/user/folder/filename.bib\n"
+                            + "in Windows, ex. C:/Users/user/Documents/folder/file.bib:\n\n");
                     if (io.saveRefstoFile(references.viitteetInBibtex(), input)) {
                         io.print("References added it to file\n");
                     } else {
@@ -168,6 +171,8 @@ public class Bibtex {
             } else if (input.equals("")) {
                 io.print("Bye!\n");
                 break;
+            } else if (input.equals("git")) {
+                GitHubSync sync = new GitHubSync();
             } else if (input.equals("list")) {
                 io.print(references.toString());
             } else if (input.equals("biblist")) {
