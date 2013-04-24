@@ -4,7 +4,7 @@ import java.awt.*;
 import javax.swing.*;
 
 public class GUI extends JFrame {
- //sit Bibtex extends Observable ja implements ActionListener?
+            //sit Bibtex extends Observable ja implements ActionListener?
     
         //private Bibtex bibtex;
         
@@ -23,17 +23,17 @@ public class GUI extends JFrame {
         private JPanel leftPanel = new JPanel();
         private JPanel rightPanel = new JPanel();
         
-        //private JButton pathB = new JButton("Select Path");
-        private JButton searchB = new JButton("Search >>");
+        private JButton pathB = new JButton("Select Path");
+        private JButton searchB = new JButton("Search");
         private JButton addB = new JButton("Add Reference");
-        private JButton removeB = new JButton("Delete ID >>");
+        private JButton removeB = new JButton("Delete ID");
         //private JButton saveB = new JButton("Save");
         //private JButton deleteB = new JButton("Delete");
         private JButton listallB = new JButton("List All");
         private JButton bibtexB = new JButton("List Bibtex");
         //private boolean buttonsActive = true;
        
-        private JLabel pathL = new JLabel("File Path:");
+        //private JLabel pathL = new JLabel("File Path:");
         private JLabel typeL = new JLabel("Type:");
         private JLabel authorL = new JLabel("Author:");
         private JLabel titleL = new JLabel("Title:");
@@ -46,7 +46,7 @@ public class GUI extends JFrame {
         private JLabel addressL = new JLabel("Address:");
         
         private JTextField pathF = new JTextField(15);
-        private JTextField searchF = new JTextField(15);
+        private JTextField searchF = new JTextField(14);
         private JTextField typeF = new JTextField(7);
         private JTextField authorF = new JTextField(19);
         private JTextField titleF = new JTextField(20);
@@ -77,17 +77,17 @@ public class GUI extends JFrame {
             //määritellään paneelien yksityiskohdat
             this.topPanel.setLayout(new BoxLayout(this.topPanel, BoxLayout.X_AXIS));
             this.topPanel.setPreferredSize(new Dimension(700, 50));
-            this.topPanel.add(Box.createHorizontalStrut(20));
-            this.topPanel.add(this.pathL);
+            this.topPanel.add(Box.createHorizontalStrut(15));
+            this.topPanel.add(this.pathB);
             this.topPanel.add(Box.createHorizontalStrut(2));
             this.topPanel.add(this.pathF);
             this.pathF.setMaximumSize(pathF.getPreferredSize());
-            this.topPanel.add(Box.createHorizontalStrut(30));
+            this.topPanel.add(Box.createHorizontalStrut(22));
             this.topPanel.add(this.removeB);
             this.topPanel.add(Box.createHorizontalStrut(2));
             this.topPanel.add(this.deleteIDF);
             this.deleteIDF.setMaximumSize(deleteIDF.getPreferredSize());
-            this.topPanel.add(Box.createHorizontalStrut(30));
+            this.topPanel.add(Box.createHorizontalStrut(22));
             this.topPanel.add(this.searchB);
             this.topPanel.add(Box.createHorizontalStrut(2));
             this.topPanel.add(this.searchF);
@@ -106,13 +106,13 @@ public class GUI extends JFrame {
             this.middlePanel.add(Box.createHorizontalStrut(15));
             this.middlePanel.add(this.titleL);
             this.middlePanel.add(this.titleF);
-            this.middlePanel.add(Box.createHorizontalStrut(15));
+            this.middlePanel.add(Box.createHorizontalStrut(17));
             this.middlePanel.add(this.yearL);
             this.middlePanel.add(this.yearF);
             this.middlePanel.add(Box.createHorizontalStrut(15));
             this.middlePanel.add(this.booktitleL);
             this.middlePanel.add(this.booktitleF);
-            this.middlePanel.add(Box.createHorizontalStrut(15));
+            this.middlePanel.add(Box.createHorizontalStrut(17));
             this.middlePanel.add(this.journalL);
             this.middlePanel.add(this.journalF);
             this.middlePanel.add(Box.createHorizontalStrut(15));
@@ -121,13 +121,13 @@ public class GUI extends JFrame {
             this.middlePanel.add(Box.createHorizontalStrut(10));
             this.middlePanel.add(this.publisherL);
             this.middlePanel.add(this.publisherF);
-            this.middlePanel.add(Box.createHorizontalStrut(10));
+            this.middlePanel.add(Box.createHorizontalStrut(9));
             this.middlePanel.add(this.volumeL);
             this.middlePanel.add(this.volumeF);
-            this.middlePanel.add(Box.createHorizontalStrut(10));
+            this.middlePanel.add(Box.createHorizontalStrut(9));
             this.middlePanel.add(this.addressL);
             this.middlePanel.add(this.addressF);
-            this.middlePanel.add(Box.createHorizontalStrut(10));
+            this.middlePanel.add(Box.createHorizontalStrut(9));
             this.middlePanel.add(this.addB);
             this.middlePanel.add(Box.createHorizontalStrut(350));
             this.middlePanel.add(this.listallB);
@@ -143,7 +143,14 @@ public class GUI extends JFrame {
             this.textArea.setLineWrap(true);
             this.textArea.setWrapStyleWord(true);
             this.textArea.setEditable(false);
-            this.textArea.setText("  Welcome to EpicBibtexReader! \n");
+            this.textArea.setText("  Welcome to EpicBibtexReader! \n \n"
+                    + " How to use: \n"
+                    + " First select the file path that matches the GitHub repository of your references or use the default refs.bib file in the root folder.  \n\n"
+                    + " Then add, search for or delete references: \n"
+                    + " Add by filling the related fields and push Add. You're added reference will be shown to you afterwards. \n"
+                    + " Search by the open search bar or limit the search to spesific fields by typing in those and push Search. \n"
+                    + " Delete a reference by typing the relevant ID into the field and pushing Delete. \n \n"
+                    + " You can list all the references in either clear text or Bibtex form with List All and List Bibtex.");
             
 //            this.searchB.addActionListener(new ActionListener() {
 //           
@@ -235,6 +242,7 @@ public class GUI extends JFrame {
 		//textArea näyttää uusimman päivityksen
 		this.textArea.setText(this.textArea.getText());
             }
+
             public static void main(String[] args) {
 
                 GUI gui = new GUI();
