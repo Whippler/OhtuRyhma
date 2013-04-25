@@ -28,6 +28,14 @@ public class Viitteet {
         }
         
     }
+    
+    public boolean delete(String id){
+        if(viitteet.containsKey(id)){
+            viitteet.remove(id);
+            return true;
+        }
+        return false;
+    }
     public HashSet<Reference> haeViitteista(String s) {
         HashSet<Reference> founded = new HashSet<Reference>();
         for (Reference r : viitteet.values()) {

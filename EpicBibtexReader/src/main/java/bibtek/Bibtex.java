@@ -17,6 +17,17 @@ public class Bibtex {
         this.io = io;
         references = new Viitteet();
     }
+    
+    public void deleteReference(){
+        System.out.println(references);
+        io.print("Delete reference, by entering its ID:");
+        String inp = io.readUserInput(">");
+        if (references.containsKey(inp)){
+            references.delete(inp);
+        } else {
+            io.print("Reference with that ID does not exist!");
+        }
+    }
 
     //luo uuden viitteen, kysyy tyypin ja sisällön
     public void createReference() {
@@ -160,6 +171,7 @@ public class Bibtex {
                 io.print("Current ref: " + ref.getData().get("title"));
             }
             io.print("Enter create if you want to create a reference.\n"
+                    + "Enter delete if you want to delete a reference.\n"
                     + "Enter search if you want to search from files.\n"
                     + "Enter plain if you want to read reference in plaintext.\n"
                     + "Enter bib if you want to read reference in bibtex.\n"
@@ -170,6 +182,7 @@ public class Bibtex {
                     + "Enter git if you want to sync your files to github\n"
                     + "Press enter if you want to quit.\n");
             input = io.readUserInput(">");
+            
             if (input.equalsIgnoreCase("create")) {
                 createReference();
                 if (this.ref == null || this.ref.refInBibtex() == null) {
@@ -224,6 +237,8 @@ public class Bibtex {
             } else if (input.equals("select")) {
                 io.print(references.toString() + "----------------------");
                 ref = references.getViitteet().get(io.readUserInput("kirjoita id"));
+            } else if (input.equals("delete")) {
+                this.deleteReference();
             }
         }
     }
