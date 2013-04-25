@@ -66,18 +66,25 @@ public class Bibtex {
         }
         String retID = "";
         for (String s : author.split(" and ")) {
-            retID += s.charAt(0);
+            if (s.charAt(0) == 'ä' || s.charAt(0) == 'Ä'){
+                retID += 'A';
+            }
+            else if (s.charAt(0) == 'ö' || s.charAt(0) == 'Ö'){
+                retID += 'O';
+            } else {
+                retID += s.charAt(0);
+            }
         }
         retID += year.substring(year.length() - 2);
-
 
         Character alku = 'a';
         int a = alku.charValue();
 
         while (true) {  // tarkistaa onko ID jo käytössä ja jos on niin vaihtaa viimeisen merkin uuteen.
+            
             if (references.containsKey(retID)) {
                 if((char) a == 'a'){
-                    retID = retID.substring(0, retID.length() );
+                    retID = retID.substring(0, retID.length());
                 }else if((char) a == 'z'){
                     retID = retID.substring(0, retID.length()-1);
                     retID = retID + 'a';
