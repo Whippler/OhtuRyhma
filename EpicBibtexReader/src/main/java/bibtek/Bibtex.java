@@ -22,10 +22,12 @@ public class Bibtex {
         System.out.println(references);
         io.print("Delete reference, by entering its ID:");
         String inp = io.readUserInput(">");
+        
         if (references.containsKey(inp)){
             references.delete(inp);
+            io.print("Delete succesfull");
         } else {
-            io.print("Reference with that ID does not exist!");
+            io.print("Reference with that ID does not exist!\n");
         }
     }
 
