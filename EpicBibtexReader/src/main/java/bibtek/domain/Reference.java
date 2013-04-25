@@ -82,16 +82,16 @@ public class Reference {
             s = s.replace("\\\"{A}", "Ä");
             s = s.replace("\\\"{o}", "ö");
             s = s.replace("\\\"{O}", "Ö");
-            s = s.replace("\\{aa}", "å");
-            s = s.replace("\\{AA}", "Å");
+            s = s.replace("{\\aa}", "å");
+            s = s.replace("{\\AA}", "Å");
         }
         else {
             s = s.replace("ä", "\\\"{a}");
             s = s.replace("Ä", "\\\"{A}");
             s = s.replace("ö", "\\\"{o}");
             s = s.replace("Ö", "\\\"{O}");
-            s = s.replace("å", "\\{aa}");
-            s = s.replace("Å", "\\{AA}");
+            s = s.replace("å", "{\\aa}");
+            s = s.replace("Å", "{\\AA}");
         }
         return s;
     }

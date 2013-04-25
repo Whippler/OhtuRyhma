@@ -17,13 +17,13 @@ public class Bibtex {
         this.io = io;
         references = new Viitteet();
     }
-    
-    public void deleteReference(){
+
+    public void deleteReference() {
         System.out.println(references);
         io.print("Delete reference, by entering its ID:");
         String inp = io.readUserInput(">");
-        
-        if (references.containsKey(inp)){
+
+        if (references.containsKey(inp)) {
             references.delete(inp);
             io.print("Delete succesfull");
         } else {
@@ -79,11 +79,12 @@ public class Bibtex {
         }
         String retID = "";
         for (String s : author.split(" and ")) {
-            if (s.charAt(0) == 'ä' || s.charAt(0) == 'Ä'){
+            if (s.charAt(0) == 'ä' || s.charAt(0) == 'Ä') {
                 retID += 'A';
-            }
-            else if (s.charAt(0) == 'ö' || s.charAt(0) == 'Ö'){
+            } else if (s.charAt(0) == 'ö' || s.charAt(0) == 'Ö') {
                 retID += 'O';
+            } else if (s.charAt(0) == 'å' || s.charAt(0) == 'Å') {
+                retID += 'A';
             } else {
                 retID += s.charAt(0);
             }
@@ -94,17 +95,17 @@ public class Bibtex {
         int a = alku.charValue();
 
         while (true) {  // tarkistaa onko ID jo käytössä ja jos on niin vaihtaa viimeisen merkin uuteen.
-            
+
             if (references.containsKey(retID)) {
-                if((char) a == 'a'){
+                if ((char) a == 'a') {
                     retID = retID.substring(0, retID.length());
-                }else if((char) a == 'z'){
-                    retID = retID.substring(0, retID.length()-1);
+                } else if ((char) a == 'z') {
+                    retID = retID.substring(0, retID.length() - 1);
                     retID = retID + 'a';
                     a = alku.charValue();
                     continue;
-                } else{
-                    retID = retID.substring(0, retID.length()-1);
+                } else {
+                    retID = retID.substring(0, retID.length() - 1);
                 }
                 retID = retID + (char) a;
                 a++;
@@ -146,7 +147,7 @@ public class Bibtex {
         String input = "";
         io.print("By default your reference file name is refs.bib.\n"
                 + "Do you wish to change this setting? (y/n)\n");
-        while(true){
+        while (true) {
             input = io.readUserInput(">");
             if (input.equalsIgnoreCase("n")) {
                 io.selectFile("refs");
@@ -160,7 +161,7 @@ public class Bibtex {
                     }
                     io.selectFile(input);
                     io.print("References will now be saved into " + input + ".bib");
-                    
+
                 }
                 break;
             }
@@ -184,7 +185,7 @@ public class Bibtex {
                     + "Enter git if you want to sync your files to github\n"
                     + "Press enter if you want to quit.\n");
             input = io.readUserInput(">");
-            
+
             if (input.equalsIgnoreCase("create")) {
                 createReference();
                 if (this.ref == null || this.ref.refInBibtex() == null) {

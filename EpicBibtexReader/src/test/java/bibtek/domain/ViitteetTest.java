@@ -51,7 +51,7 @@ public class ViitteetTest {
     public void viitteidenTulostusBibtexinaToimii() {
         assertEquals("@article{VV88,\n"
                 + "author = {Vainio, Juha and Vanhapoika, Nestori},\n"
-                + "title = {\\\"{O}\\\"{o}, \\{AA}land},\n"
+                + "title = {\\\"{O}\\\"{o}, {\\AA}land},\n"
                 + "year = {1988},\n"
                 + "}\n"
                 + "\n"
