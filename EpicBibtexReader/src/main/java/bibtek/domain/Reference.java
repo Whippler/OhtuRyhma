@@ -81,7 +81,7 @@ public class Reference {
     public String korjaaKirjaimet(String s) {
         if (s.contains("{a}") || s.contains("{o}")
                 || s.contains("{A}") || s.contains("{O}")
-                || s.contains("{aa}") || s.contains("{AA}")) {
+                || s.contains("{\\aa}") || s.contains("{\\AA}")) {
             s = s.replace("\\\"{a}", "ä");
             s = s.replace("\\\"{A}", "Ä");
             s = s.replace("\\\"{o}", "ö");

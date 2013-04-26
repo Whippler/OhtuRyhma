@@ -129,4 +129,18 @@ public class ViitteetTest {
                 + "M99: Kuhnurin elämää - Mehiläinen, Matti\n"
                 + "K74: Yötyö - Kuutamo, Keijo\n", refs.toString());
     }
+
+    @Test
+    public void viitteistaPoistaminenToimii() {
+        assertTrue(refs.delete("M99"));
+        assertEquals(1, refs.getViitteet().size());
+        assertTrue(refs.delete("VV88"));
+        assertTrue(refs.getViitteet().isEmpty());
+    }
+    
+    @Test
+    public void poistoPalauttaaFalseJosIdEiOlemassa(){
+        assertFalse(refs.delete("M9"));
+        assertFalse(refs.delete("M999"));
+    }
 }

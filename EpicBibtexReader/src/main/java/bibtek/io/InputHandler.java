@@ -42,7 +42,8 @@ public class InputHandler implements IO {
                 this.refs.createNewFile();
             }
         } catch (IOException e) {
-            e.printStackTrace(System.out);
+            print("Error when creating a file!");
+        //    e.printStackTrace(System.out);
         }
     }
 
@@ -67,7 +68,7 @@ public class InputHandler implements IO {
             }
             return true;
         } catch (Exception e) {
-            e.printStackTrace(System.out);
+         //   e.printStackTrace(System.out);
             return false;
         }
     }

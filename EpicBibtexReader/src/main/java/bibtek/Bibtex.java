@@ -5,7 +5,6 @@ import bibtek.domain.Reference;
 import bibtek.domain.Viitteet;
 import bibtek.io.IO;
 import java.util.Arrays;
-import java.util.HashSet;
 
 public class Bibtex {
 
@@ -57,7 +56,7 @@ public class Bibtex {
                 continue;
             }
             if (field.toLowerCase().equals("author")) {
-                io.print("Author is presented in format: Surrname, Firstname & ...");
+                io.print("Author is presented in format: Surname, Firstname and ...");
             }
             inp = io.readUserInput(field + ":");
             if (!ref.setField(field.toLowerCase(), inp)) {
@@ -153,6 +152,8 @@ public class Bibtex {
                 io.selectFile("refs");
                 break;
             } else if (input.equalsIgnoreCase("y")) {
+                io.print("Remember to give the full filepath if the file\n"
+                        +"is located in different directory");
                 input = "";
                 while (input.length() == 0) {
                     input = io.readUserInput("filename:");
@@ -198,13 +199,13 @@ public class Bibtex {
                 if (this.references == null || this.references.viitteetInBibtex().equals("")) {
                     io.print("No current references to save!");
                 } else {
-                    input = io.readUserInput("Define save location, or leave empty to write loaded file\n"
+                    input = io.readUserInput("Define save location, or leave empty to write into loaded file\n"
                             + "The whole path must be presented, in Linux ex. /home/user/folder/filename.bib\n"
                             + "in Windows, ex. C:/Users/user/Documents/folder/file.bib:\n\n");
                     if (io.saveRefstoFile(references.viitteetInBibtex(), input)) {
                         io.print("References added to the file\n");
                     } else {
-                        io.print("Error in writing to a file!");
+                        io.print("Error in writing to a file!/");
                     }
                 }
             } else if (input.equalsIgnoreCase("plain")) {
@@ -226,6 +227,7 @@ public class Bibtex {
                 break;
             } else if (input.equals("git")) {
                 GitHubSync sync = new GitHubSync();
+                sync.run();
             } else if (input.equals("list")) {
                 io.print(references.toString());
             } else if (input.equals("biblist")) {

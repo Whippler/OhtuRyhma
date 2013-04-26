@@ -20,7 +20,7 @@ public class GitHubSync {
     String[] pull = {"git", "pull"};
 
     public GitHubSync() {
-        run();
+//        run();
     }
 
     public void run() {
