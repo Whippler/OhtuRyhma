@@ -61,7 +61,7 @@ scenario "User wants to select a reference", {
 
 scenario "User search for a non-existent reference", {
     given 'User starts executing program', {
-			io = new StubIO("n", "search", "plom", "")
+			io = new StubIO("n", "search", "", "plom", "")
 			bib = new Bibtex(io)
     }
 
@@ -70,13 +70,13 @@ scenario "User search for a non-existent reference", {
     }
 
     then 'Program informs the user if a match was found', {
-			io.getPrints().shouldHave("No matches!")
+			io.getPrints().shouldHave("No matches found!")
     }
 }
 
 scenario "User searches for an existing reference", {
     given 'User starts executing program', {
-			io = new StubIO("n", "search", "norppa", "")
+			io = new StubIO("n", "search","", "norppa", "")
 			bib = new Bibtex(io)
     }
 
@@ -85,11 +85,8 @@ scenario "User searches for an existing reference", {
     }
 
     then 'Program displays the references consistent to the search term', {
-			io.getPrints().shouldHave("[\n"
-															+	"author: Vainio, Juha and Vanhapoika, Nestori\n"
-															+ "title: Mies ja norppa\n"
-															+ "year: 1988\n"
-															+	"]")
+			io.getPrints().shouldHave("1. Author: Vainio, Juha and Vanhapoika, Nestori\n"
+						+ "Title: Mies ja norppa\n")
     }
 }
 
@@ -131,7 +128,7 @@ scenario "User selects a reference and then views it in bibtex", {
 
 scenario "User searches for several references with the search term", {
     given 'User starts executing program', {
-			io = new StubIO("n", "search", "19", "")
+			io = new StubIO("n", "search", "", "19", "")
 			bib = new Bibtex(io)
     }
 
@@ -140,12 +137,12 @@ scenario "User searches for several references with the search term", {
     }
 
     then 'Program displays the references consistent to the search term', {
-			io.getPrints().shouldHave("author: Mehiläinen, Matti\n"
-									+ "title: Kuhnurin elämää\n"
-									+ "year: 1999\n")
-			io.getPrints().shouldHave("author: Vainio, Juha and Vanhapoika, Nestori\n"
-									+ "title: Mies ja norppa\n"
-									+ "year: 1988\n")
+		io.getPrints().shouldHave("1. Author: Vainio, Juha and Vanhapoika, Nestori\n"
+									+ "Title: Mies ja norppa\n")	
+                io.getPrints().shouldHave("2. Author: Mehiläinen, Matti\n"
+									+ "Title: Kuhnurin elämää\n")
+									
+			
 									
     }
 }

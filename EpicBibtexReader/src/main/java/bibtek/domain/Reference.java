@@ -31,6 +31,10 @@ public class Reference {
         return id;
     }
     
+    public String getEntrytype(){
+        return entryType;
+    }
+    
     public HashMap<String, String> getData() {
         return data;
     }

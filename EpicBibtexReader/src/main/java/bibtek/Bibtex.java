@@ -57,7 +57,7 @@ public class Bibtex {
                 continue;
             }
             if (field.toLowerCase().equals("author")) {
-                io.print("Author is presented in format: Firstname, Surrname & ...");
+                io.print("Author is presented in format: Surrname, Firstname & ...");
             }
             inp = io.readUserInput(field + ":");
             if (!ref.setField(field.toLowerCase(), inp)) {
@@ -173,7 +173,7 @@ public class Bibtex {
             if (ref != null) {
                 io.print("Current ref: " + ref.getData().get("title"));
             }
-            io.print("Enter create if you want to create a reference.\n"
+            io.print("\nEnter create if you want to create a reference.\n"
                     + "Enter delete if you want to delete a reference.\n"
                     + "Enter search if you want to search from files.\n"
                     + "Enter plain if you want to read reference in plaintext.\n"
@@ -231,12 +231,9 @@ public class Bibtex {
             } else if (input.equals("biblist")) {
                 io.print(references.viitteetInBibtex());
             } else if (input.equals("search")) {
-                HashSet<Reference> match = references.haeViitteista(io.readUserInput("Mitä haetaan?"));
-                if (match == null) {
-                    io.print("No matches!");
-                } else {
-                    io.print(match.toString());
-                }
+                String match = references.haeViitteista(io.readUserInput("What field/entrytypes you wanna search (empty is accepted)?"),
+                        io.readUserInput("And in what term?"));
+                io.print("\n"+match);
             } else if (input.equals("select")) {
                 io.print(references.toString() + "----------------------");
                 ref = references.getViitteet().get(io.readUserInput("kirjoita id"));

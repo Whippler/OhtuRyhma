@@ -66,49 +66,43 @@ public class ViitteetTest {
 
     @Test
     public void viitteistaHakuToimiiEriParametreilla() {
-        HashSet<Reference> match = refs.haeViitteista("Vainio");
-        assertEquals("[\n"
-                + "author: Vainio, Juha and Vanhapoika, Nestori\n"
-                + "title: Öö, Åland\n"
-                + "year: 1988\n"
-                + "]", match.toString());
-        match = refs.haeViitteista("88");
-        assertEquals("[\n"
-                + "author: Vainio, Juha and Vanhapoika, Nestori\n"
-                + "title: Öö, Åland\n"
-                + "year: 1988\n"
-                + "]", match.toString());
+        String match = refs.haeViitteista("author","Vainio");
+        assertEquals("1. Author: Vainio, Juha and Vanhapoika, Nestori\n"
+                + "Title: Öö, Åland\n", match);
+        
+        match = refs.haeViitteista("year","88");
+        assertEquals("1. Author: Vainio, Juha and Vanhapoika, Nestori\n"
+                + "Title: Öö, Åland\n", match);
 
-        match = refs.haeViitteista("Kuhnurin");
-        assertEquals("[\n"
-                + "author: Mehiläinen, Matti\n"
-                + "title: Kuhnurin elämää\n"
-                + "year: 1999\n"
-                + "]", match.toString());
+        match = refs.haeViitteista("","Kuhnurin");
+        assertEquals("1. Author: Mehiläinen, Matti\n"
+                + "Title: Kuhnurin elämää\n", match);
 
-        match = refs.haeViitteista("Matti");
-        assertEquals("[\n"
-                + "author: Mehiläinen, Matti\n"
-                + "title: Kuhnurin elämää\n"
-                + "year: 1999\n"
-                + "]", match.toString());
+        match = refs.haeViitteista("book", "");
+        assertEquals("1. Author: Mehiläinen, Matti\n"
+                + "Title: Kuhnurin elämää\n", match);
+        
+        match = refs.haeViitteista("id", "M99");
+        assertEquals("1. Author: Mehiläinen, Matti\n"
+                + "Title: Kuhnurin elämää\n", match);
 
     }
 
     @Test
     public void hakuPalauttaaKaikkiOsumat() {
-        HashSet<Reference> match = refs.haeViitteista("19");
-        assertEquals(2, match.size());
-        assertTrue(match.contains(ref1));
-        assertTrue(match.contains(ref2));
+        String match = refs.haeViitteista("year","19");
+        assertEquals("1. Author: Vainio, Juha and Vanhapoika, Nestori\n"
+                + "Title: Öö, Åland\n"
+                + "2. Author: Mehiläinen, Matti\n"
+                + "Title: Kuhnurin elämää\n", match);
     }
 
     @Test
-    public void hakuPalauttaaNullJosEiOsumia() {
-        HashSet<Reference> match = refs.haeViitteista("2009");
-        assertEquals(null, match);
-        match = refs.haeViitteista("Mainio");
-        assertEquals(null, match);
+    public void hakuEiToimiJosVaara() {
+        String match = refs.haeViitteista("2009", "dafuq");
+        assertEquals("No field/entrytypes found", match);
+        match = refs.haeViitteista("title", "Mainio");
+        assertEquals("No matches found!", match);
     }
 
     @Test
